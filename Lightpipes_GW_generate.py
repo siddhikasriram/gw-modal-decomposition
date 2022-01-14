@@ -8,7 +8,7 @@ from numpy.lib.index_tricks import index_exp
 np.random.seed(7561)
 
 # Number of images to be generated
-Ntot=7000
+Ntot=50000
 
 # Defining variables: Wavelength of 1064 Nanometer, 40*40 mm2 sqaure grid with 128x128 pixels
 wavelength = 1064*nm
@@ -24,8 +24,7 @@ mode_n=np.random.randint(0,mode_max,Ntot)
 
 # Noise distribution
 mean = 0
-std_list = [0.25, 0.50, 1.00]
-sigma = np.random.choice(std_list, Ntot)
+sigma = np.random.uniform(0.05,0.9, Ntot)
 
 # Offset 
 x_offset = np.random.randint(-30,30, Ntot)
@@ -36,7 +35,7 @@ y_offset = np.random.randint(-30,30, Ntot)
 F0=Begin(size,wavelength,Npix)
 
 # Catalog is the record of all the images and it's parameters generated
-catalog = open("catalog.txt","w")
+catalog = open("sample_catalog.txt","w")
 for num in range(Ntot):
    nn=mode_n[num]
    mm=mode_m[num]
@@ -46,6 +45,7 @@ for num in range(Ntot):
    Iimg=Intensity(F1,1) #Intensity is calculated and normalized to 255 (2 -> 255, 1 -> 1.0, 0 -> not normalized)
    
    # Adding Noise
+   
    gauss = np.random.normal(mean,sigma[num],Iimg.shape)
    gauss_img = gauss.reshape(Iimg.shape)
    noisyIimg = Iimg + gauss_img
