@@ -6,6 +6,7 @@ from tensorflow import keras
 import numpy as np
 from matplotlib.pyplot import figure
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 model = keras.models.load_model('/home/siddhika/gw-modal-decomposition/new_model.h5')
 print(model.summary())
@@ -35,16 +36,16 @@ def labelling (fileName):
     labels.append(int(image[9]))
     labels.append(int(image[11]))
     if image[18] == 'p':
-      labels.append(int("+"+image[19:21]))
-    
+      labels.append(64 + int(image[19:21]))
+
     else:
-      labels.append(int("-"+image[19:21]))
-      
+      labels.append(64 + int("-"+image[19:21]))
+
     if image[22] == 'p':
-      labels.append(int("+"+image[23:25]))
-      
+      labels.append(64 + int("+"+image[23:25]))
+
     else:
-      labels.append(int("-"+image[23:25]))
+      labels.append(64 + int("-"+image[23:25]))
     yParam.append(labels)
   yParam = np.array([np.array(x) for x in yParam])
   return yParam
@@ -67,33 +68,59 @@ print(yTest[:,0])
 
 fig = plt.figure(figsize=(15,15))
 
-ax = fig.add_subplot(2, 2, 1, projection='3d')
-ax.set_title('m Modes')
-ax.set_xlabel('TEM m actual')
-ax.set_ylabel('TEM n actual')
-ax.set_zlabel('m actual - m predicted')
-ax.scatter(y_test[0], y_test[1], y_test[0]-yTest[0],  color='red', marker='*')
+plt.subplot(3,3,1)
+plt.title('m modes')
+plt.xlabel('TEM m actual')
+plt.ylabel('TEM n actual')
+cm = plt.cm.get_cmap('Set1')
+sc = plt.scatter(y_test[0:100, 0], y_test[0:100, 1], c=(y_test[0:100, 0]-yTest[0:100, 0]), cmap=cm)
+plt.colorbar(sc)
 
-ax1 = fig.add_subplot(2, 2, 2, projection='3d')
-ax1.set_title('n Modes')
-ax1.set_xlabel('TEM m actual')
-ax1.set_ylabel('TEM n actual')
-ax1.set_zlabel('n actual - n predicted')
-ax1.scatter(y_test[0], y_test[1], y_test[1]-yTest[1],  color='red', marker='*')
+plt.subplot2grid(shape=(3, 3), loc=(0,1), colspan=2)
+plt.title('m actual - m predicted graph')
+#plt.xlabel('TEM m actual')
+plt.ylabel('m Deviation')
+m_deviation = y_test[0:100, 0]-yTest[0:100, 0]
+#plt.legend(m_deviation, loc = 'best')
+plt.plot(m_deviation, 'o' )
+for i, j in zip(np.arange(len(m_deviation)), m_deviation):
+   plt.text(i, j+0.02, '({}, {})'.format(i, j))
 
-plt.subplot(2,2,3)
+plt.subplot(3,3,4)
+plt.title('n modes')
+plt.xlabel('TEM m actual')
+plt.ylabel('TEM n actual')
+cm = plt.cm.get_cmap('Set1')
+sc = plt.scatter(y_test[0:100, 0], y_test[0:100, 1], c=(y_test[0:100, 1]-yTest[0:100, 1]), cmap=cm)
+plt.colorbar(sc)
+
+plt.subplot2grid(shape=(3, 3), loc=(1,1), colspan=2)
+plt.title('n actual - n predicted graph')
+#plt.xlabel('TEM n actual')
+plt.ylabel('n Deviation')
+n_deviation = y_test[0:100, 1]-yTest[0:100, 1]
+plt.plot(n_deviation, 'o')
+for i, j in zip(np.arange(len(n_deviation)), n_deviation):
+   plt.text(i, j+0.03, '({}, {})'.format(i, j))
+
+plt.subplot(3,3,7)
 plt.title('X Offset')
 plt.xlabel('x off actual')
 plt.ylabel('x off predicted')
-plt.axis([0, 128, 0, 128])
-plt.scatter(y_test[2], yTest[2], color='green', marker='*')
+plt.axis([30, 100, 30, 100])
+plt.scatter(y_test[0:100, 2], yTest[0:100, 2], color='green', marker='*')
+for i, j in zip(y_test[0:100, 2], yTest[0:100, 2]):
+   plt.text(i, j-0.03, '({}, {})'.format(i, j))
 
-plt.subplot(2,2,4)
+plt.subplot(3,3,8)
 plt.title('Y Offset')
 plt.xlabel('y off actual')
 plt.ylabel('y off predicted')
-plt.axis([0, 128, 0, 128])
-plt.scatter(y_test[3], yTest[3], color='green', marker='*')
+plt.axis([30, 100, 30, 100])
+plt.scatter(y_test[0:100, 3], yTest[0:100, 3], color='green', marker='*')
+for i, j in zip(y_test[0:100, 3], yTest[0:100, 3]):
+   plt.text(i, j-0.03, '({}, {})'.format(i, j))
 
 plt.show()   
-plt.savefig("modeloutput_new.png")
+plt.savefig("output8.png")
+
