@@ -99,9 +99,9 @@ yTrain = labelling(train_FileNames)
 yTest = labelling(test_FileNames)
 yVal = labelling(val_FileNames)
 
-train_FileNames = [src + name for name in train_FileNames.tolist()]
-val_FileNames = [src + name for name in val_FileNames.tolist()]
-test_FileNames = [src+ name for name in test_FileNames.tolist()]
+#train_FileNames = [src + name for name in train_FileNames.tolist()]
+#val_FileNames = [src + name for name in val_FileNames.tolist()]
+#test_FileNames = [src+ name for name in test_FileNames.tolist()]
 #len(yTest)
 
 #type(yVal[0])
@@ -109,8 +109,9 @@ test_FileNames = [src+ name for name in test_FileNames.tolist()]
 img_size = 128
 def getdata(data_dir):
   data=[]
-  for img in (data_dir):
+  for img in data_dir:
     img_arr = cv2.imread(os.path.join(src, img), 0)#[..., ::-1]
+    print(img_arr)
     img_arr = img_arr[..., np.newaxis]
     data.append(img_arr)
   return data
