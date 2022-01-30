@@ -1,4 +1,4 @@
-
+from statistics import mean
 from sklearn.metrics import classification_report, confusion_matrix
 import os
 import cv2
@@ -66,61 +66,97 @@ yTest[:,3] = [round(x) for x in yTest[:,3]]
 print(yTest.shape)
 print(yTest[:,0])
 
+actual = y_test.copy()
+predicted = yTest.copy()
+actual = [tuple(x[:2]) for x in actual]
+predicted = [tuple(x[:2]) for x in predicted]
+
+diff=[]
+for ind, act in enumerate(actual):
+  pred = predicted[ind]
+  z = [x - pred[i] for i, x in enumerate(act)]
+  diff.append(z)
+
+actual_keys = [tuple(i) for i in actual]
+
+mdiff = {}
+ndiff = {}
+for x in actual_keys:
+  mdiff[x]=[]
+  ndiff[x]=[]
+    
+for i, x in enumerate(actual):
+  if x in mdiff.keys():
+    mdiff[x].append(diff[i][0])
+    ndiff[x].append(diff[i][1])
+
+for k, v in mdiff.items():
+  mdiff[k]=mean(v)
+for k, v in ndiff.items():
+  ndiff[k]=mean(v)
+
 fig = plt.figure(figsize=(15,15))
 
 plt.subplot(3,3,1)
-plt.title('m modes')
+plt.title('m mode predicted')
 plt.xlabel('TEM m actual')
 plt.ylabel('TEM n actual')
-cm = plt.cm.get_cmap('Set1')
-sc = plt.scatter(y_test[0:100, 0], y_test[0:100, 1], c=(y_test[0:100, 0]-yTest[0:100, 0]), cmap=cm)
+cm = plt.cm.get_cmap('autumn')
+actual = [tuple(x[:2]) for x in actual]
+c_list_m = []
+
+for i, a in enumerate(y_test[:,0]):
+  print(i)
+  p = yTest[i:, 0]
+  z = actual[i]
+  if z in mdiff.keys():
+    c_list_m.append(mdiff[z])
+sc = plt.scatter(y_test[:, 0], y_test[:, 1], c=c_list_m, cmap = cm)
 plt.colorbar(sc)
 
 plt.subplot2grid(shape=(3, 3), loc=(0,1), colspan=2)
 plt.title('m actual - m predicted graph')
 #plt.xlabel('TEM m actual')
 plt.ylabel('m Deviation')
-m_deviation = y_test[0:100, 0]-yTest[0:100, 0]
-#plt.legend(m_deviation, loc = 'best')
+m_deviation = y_test[:, 0]-yTest[:, 0]
 plt.plot(m_deviation, 'o' )
-for i, j in zip(np.arange(len(m_deviation)), m_deviation):
-   plt.text(i, j+0.02, '({}, {})'.format(i, j))
 
 plt.subplot(3,3,4)
-plt.title('n modes')
+plt.title('n mode predicted')
 plt.xlabel('TEM m actual')
 plt.ylabel('TEM n actual')
-cm = plt.cm.get_cmap('Set1')
-sc = plt.scatter(y_test[0:100, 0], y_test[0:100, 1], c=(y_test[0:100, 1]-yTest[0:100, 1]), cmap=cm)
+cm = plt.cm.get_cmap('autumn')
+c_list_n = []
+for i, a in enumerate(y_test[:,0]):
+  p = yTest[i:, 0]
+  z = actual[i]
+  if z in ndiff.keys():
+    c_list_n.append(ndiff[z])
+sc = plt.scatter(y_test[:, 0], y_test[:, 1], c=c_list_n, cmap=cm)
 plt.colorbar(sc)
 
 plt.subplot2grid(shape=(3, 3), loc=(1,1), colspan=2)
 plt.title('n actual - n predicted graph')
 #plt.xlabel('TEM n actual')
 plt.ylabel('n Deviation')
-n_deviation = y_test[0:100, 1]-yTest[0:100, 1]
+n_deviation = y_test[:, 1]-yTest[:, 1]
 plt.plot(n_deviation, 'o')
-for i, j in zip(np.arange(len(n_deviation)), n_deviation):
-   plt.text(i, j+0.03, '({}, {})'.format(i, j))
 
 plt.subplot(3,3,7)
 plt.title('X Offset')
 plt.xlabel('x off actual')
 plt.ylabel('x off predicted')
 plt.axis([30, 100, 30, 100])
-plt.scatter(y_test[0:100, 2], yTest[0:100, 2], color='green', marker='*')
-for i, j in zip(y_test[0:100, 2], yTest[0:100, 2]):
-   plt.text(i, j-0.03, '({}, {})'.format(i, j))
+plt.scatter(y_test[:, 2], yTest[:, 2], color='green', marker='*')
 
 plt.subplot(3,3,8)
 plt.title('Y Offset')
 plt.xlabel('y off actual')
 plt.ylabel('y off predicted')
 plt.axis([30, 100, 30, 100])
-plt.scatter(y_test[0:100, 3], yTest[0:100, 3], color='green', marker='*')
-for i, j in zip(y_test[0:100, 3], yTest[0:100, 3]):
-   plt.text(i, j-0.03, '({}, {})'.format(i, j))
+plt.scatter(y_test[:, 3], yTest[:, 3], color='green', marker='*')
 
 plt.show()   
-plt.savefig("output8.png")
+plt.savefig("outputf.png")
+
 
