@@ -8,11 +8,6 @@ from matplotlib.pyplot import figure, title
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-#Loading the saved model
-model = keras.models.load_model('/home/siddhika/gw-modal-decomposition/new_model.h5')
-print(model.summary())
-
-img_size = 128
 def getdata(data_path):
   #print(len(os.listdir(data_path)))
   data=[]
@@ -24,13 +19,6 @@ def getdata(data_path):
   
   return data
 
-#Fetching the test data
-pathName = '/home/siddhika/gw-modal-decomposition/Output/test'
-testing = getdata(pathName)
-x_test = np.array(testing) / 255
-x_test.reshape(-1, img_size, img_size, 1)
-
-#Labelling the test data for plots
 def labelling (fileName):
   yParam = []
   for image in fileName:
@@ -54,14 +42,6 @@ def labelling (fileName):
   yParam = np.array([np.array(x) for x in yParam])
   return yParam
 
-fileName = os.listdir(pathName)
-y_test = labelling(fileName)
-
-#Testing the model with the test data
-y_test_pred = model.predict(x_test)
-#evaluate = model.evaluate(x_test, y_test)
-
-#Plot the performance of the model
 def show_output(y_test, y_test_pred, fname, heading):
   y_test_pred[:,0] = [round(x) for x in y_test_pred[:,0]]
   y_test_pred[:,1] = [round(x) for x in y_test_pred[:,1]]
@@ -176,46 +156,67 @@ def show_output(y_test, y_test_pred, fname, heading):
   plt.show()   
   plt.savefig(fname)
 
-main_op = '3out.png'
-main_heading = 'Performance of the model for the entire test dataset'
-show_output(y_test, y_test_pred, main_op, main_heading)
+if __name__ == '__main__':
+  #Loading the saved model
+  model = keras.models.load_model('/home/siddhika/gw-modal-decomposition/new_model.h5')  
+  print(model.summary())
 
-#Access perfromace based on noise levels - split to three ranges
-low_noise_act = []
-low_noise_pred =[]
-med_noise_act =[]
-med_noise_pred =[]
-high_noise_act =[]
-high_noise_pred =[]
+  #Fetching the test data
+  img_size = 128
+  pathName = '/home/siddhika/gw-modal-decomposition/Output/test'
+  testing = getdata(pathName)
+  x_test = np.array(testing) / 255
+  x_test.reshape(-1, img_size, img_size, 1)
 
-for ind, act in enumerate(y_test):
-  pred = y_test_pred[ind]
-  noise = y_test[ind,4]
-  if noise >= 0.05 and noise <= 0.3:
-    low_noise_act.append(y_test[ind,0:4])
-    low_noise_pred.append(y_test_pred[ind, 0:4])
-  elif noise > 0.3 and noise <=0.6:
-    med_noise_act.append(y_test[ind,0:4])
-    med_noise_pred.append(y_test_pred[ind, 0:4])
-  else:
-    high_noise_act.append(y_test[ind,0:4])
-    high_noise_pred.append(y_test_pred[ind, 0:4])
-      
-low_noise_act = np.array([np.array(x) for x in low_noise_act])
-low_noise_pred = np.array([np.array(x) for x in low_noise_pred])
-low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.3'
-low_op = '3lowout.png'
-show_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
+  #Labelling the test data for plots
+  fileName = os.listdir(pathName)
+  y_test = labelling(fileName)
 
-med_noise_act = np.array([np.array(x) for x in med_noise_act])
-med_noise_pred = np.array([np.array(x) for x in med_noise_pred])
-med_noise_heading = 'Performance of the model when the noise is between 0.3 and 0.6'
-med_op = '3medout.png'
-show_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
+  #Testing the model with the test data
+  y_test_pred = model.predict(x_test)
+  #evaluate = model.evaluate(x_test, y_test)
 
-high_noise_act = np.array([np.array(x) for x in high_noise_act])
-high_noise_pred = np.array([np.array(x) for x in high_noise_pred])
-high_noise_heading = 'Performance of the model when the noise is between 0.6 and 0.9'
-high_op = '3highout.png'
-show_output(high_noise_act, high_noise_pred, high_op, high_noise_heading)
+  #Plot the performance of the model
+  main_op = '3out.png'
+  main_heading = 'Performance of the model for the entire test dataset'
+  show_output(y_test, y_test_pred, main_op, main_heading)
+
+  #Access perfromace based on noise levels - split to three ranges
+  low_noise_act = []
+  low_noise_pred =[]
+  med_noise_act =[]
+  med_noise_pred =[]
+  high_noise_act =[]
+  high_noise_pred =[]
+
+  for ind, act in enumerate(y_test):
+    pred = y_test_pred[ind]
+    noise = y_test[ind,4]
+    if noise >= 0.05 and noise <= 0.3:
+      low_noise_act.append(y_test[ind,0:4])
+      low_noise_pred.append(y_test_pred[ind, 0:4])
+    elif noise > 0.3 and noise <=0.6:
+      med_noise_act.append(y_test[ind,0:4])
+      med_noise_pred.append(y_test_pred[ind, 0:4])
+    else:
+      high_noise_act.append(y_test[ind,0:4])
+      high_noise_pred.append(y_test_pred[ind, 0:4])
+        
+  low_noise_act = np.array([np.array(x) for x in low_noise_act])
+  low_noise_pred = np.array([np.array(x) for x in low_noise_pred])
+  low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.3'
+  low_op = '3lowout.png'
+  show_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
+
+  med_noise_act = np.array([np.array(x) for x in med_noise_act])
+  med_noise_pred = np.array([np.array(x) for x in med_noise_pred])
+  med_noise_heading = 'Performance of the model when the noise is between 0.3 and 0.6'
+  med_op = '3medout.png'
+  show_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
+
+  high_noise_act = np.array([np.array(x) for x in high_noise_act])
+  high_noise_pred = np.array([np.array(x) for x in high_noise_pred])
+  high_noise_heading = 'Performance of the model when the noise is between 0.6 and 0.9'
+  high_op = '3highout.png'
+  show_output(high_noise_act, high_noise_pred, high_op, high_noise_heading)
 
