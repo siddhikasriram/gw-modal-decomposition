@@ -156,7 +156,7 @@ def show_output(y_test, y_test_pred, fname, heading):
   plt.show()   
   plt.savefig(fname)
 
-def show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred, high_noise_act, high_noise_pred):
+def show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred, high_noise_act, high_noise_pred, fname):
 
   plt.figure(figsize=(10,20)) 
 
@@ -205,6 +205,8 @@ def show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred
   # for n, b in zip(counts, bins):
   #   plt.gca().text(b + 0.05, n, int(n), rotation = 45)  # +0.1 to center text
   plt.show()
+  plt.savefig(fname)
+  
 if __name__ == '__main__':
   #Loading the saved model
   model = keras.models.load_model('/home/siddhika/gw-modal-decomposition/new_model.h5')  
