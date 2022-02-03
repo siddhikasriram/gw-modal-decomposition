@@ -156,13 +156,14 @@ def show_output(y_test, y_test_pred, fname, heading):
   plt.show()   
   plt.savefig(fname)
 
-def show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred, high_noise_act, high_noise_pred, fname):
+def show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred, high_noise_act, high_noise_pred):
 
   plt.figure(figsize=(10,20)) 
 
+  plt.suptitle('Output according to noise ranges')
   plt.subplot(2,1,1)
   plt.title('TEM m - Individual deviation from original value')
-  plt.xlabel('m deviation')
+  plt.xlabel('m deviation for different noises')
   plt.ylabel('No. of Samples')
   plt.yscale('log')
   low_m_deviation = low_noise_act[:, 0]-low_noise_pred[:, 0]
@@ -172,16 +173,19 @@ def show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred
   plt.xlim(xmin=-5, xmax = 5)
   plt.ylim([1,10**5])
 
-  plt.hist(low_m_deviation-0.2, width=0.2, color='b', align='mid')
-  plt.hist(med_m_deviation, width=0.2, color='g', align='mid')
-  plt.hist(high_m_deviation+0.2, width=0.2, color='r', align='mid')
+  plt.hist([low_m_deviation,med_m_deviation, high_m_deviation],label=['0.05 - 0.3', '0.3 - 0.6', '0.6 - 0.9'])
+  plt.legend(loc='upper right')
+
+  # plt.hist(low_m_deviation-0.2, width=0.2, color='b', align='mid', bins = len(set(low_m_deviation)))
+  # plt.hist(med_m_deviation, width=0.2, color='g', align='mid')
+  # plt.hist(high_m_deviation+0.2, width=0.2, color='r', align='mid')
   # counts, bins, _ = plt.hist(m_deviation, bins=len(set(m_deviation)))
   # for n, b in zip(counts, bins):
   #   plt.gca().text(b + 0.05, n, int(n), rotation = 45)  # +0.1 to center text
 
   plt.subplot(2,1,2)
   plt.title('TEM n - Individual deviation from original value')
-  plt.xlabel('n deviation')
+  plt.xlabel('n deviation for different noises')
   plt.ylabel('No. of Samples')
   plt.yscale('log')
   low_n_deviation = low_noise_act[:, 1]-low_noise_pred[:, 1]
@@ -191,14 +195,16 @@ def show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred
   plt.xlim(xmin=-5, xmax = 5)
   plt.ylim([1,10**5])
 
-  plt.hist(low_n_deviation-0.2, width=0.2, color='b', align='mid')
-  plt.hist(med_n_deviation, width=0.2, color='g', align='mid')
-  plt.hist(high_n_deviation+0.2, width=0.2, color='r', align='mid')
+  plt.hist([low_n_deviation,med_n_deviation, high_n_deviation],label=['0.05 - 0.3', '0.3 - 0.6', '0.6 - 0.9'])
+  plt.legend(loc='upper right')
+
+  # plt.hist(low_n_deviation-0.2, width=0.2, color='b', align='mid')
+  # plt.hist(med_n_deviation, width=0.2, color='g', align='mid')
+  # plt.hist(high_n_deviation+0.2, width=0.2, color='r', align='mid')
   # counts, bins, _ = plt.hist(m_deviation, bins=len(set(m_deviation)))
   # for n, b in zip(counts, bins):
   #   plt.gca().text(b + 0.05, n, int(n), rotation = 45)  # +0.1 to center text
   plt.show()
-  plt.savefig(fname)
 if __name__ == '__main__':
   #Loading the saved model
   model = keras.models.load_model('/home/siddhika/gw-modal-decomposition/new_model.h5')  
@@ -262,6 +268,6 @@ if __name__ == '__main__':
   high_noise_heading = 'Performance of the model when the noise is between 0.6 and 0.9'
   high_op = '3highout.png'
   #show_output(high_noise_act, high_noise_pred, high_op, high_noise_heading)
-  noise_heading = 'noiseplot.png'
+  noise_heading = 'noiseplot1.png'
   show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred, high_noise_act, high_noise_pred, noise_heading)
 
