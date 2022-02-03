@@ -63,8 +63,6 @@ yTest[:,0] = [round(x) for x in yTest[:,0]]
 yTest[:,1] = [round(x) for x in yTest[:,1]]
 yTest[:,2] = [round(x) for x in yTest[:,2]]
 yTest[:,3] = [round(x) for x in yTest[:,3]]
-print(yTest.shape)
-print(yTest[:,0])
 
 actual = y_test.copy()
 predicted = yTest.copy()
@@ -95,10 +93,10 @@ for k, v in mdiff.items():
 for k, v in ndiff.items():
   ndiff[k]=mean(v)
 
-fig = plt.figure(figsize=(15,15))
+fig = plt.figure(figsize=(13,20))
 
-plt.subplot(3,3,1)
-plt.title('m mode predicted')
+plt.subplot(3,2,1)
+plt.title('TEM m - Mean deviation for all mode combinations')
 plt.xlabel('TEM m actual')
 plt.ylabel('TEM n actual')
 cm = plt.cm.get_cmap('autumn')
@@ -112,17 +110,25 @@ for i, a in enumerate(y_test[:,0]):
   if z in mdiff.keys():
     c_list_m.append(mdiff[z])
 sc = plt.scatter(y_test[:, 0], y_test[:, 1], c=c_list_m, cmap = cm)
-plt.colorbar(sc)
+cbar1 = plt.colorbar(sc)
+cbar1.mappable.set_clim(vmin=-1,vmax=1)
 
-plt.subplot2grid(shape=(3, 3), loc=(0,1), colspan=2)
-plt.title('m actual - m predicted graph')
-#plt.xlabel('TEM m actual')
-plt.ylabel('m Deviation')
+plt.subplot(3,2,2)
+plt.title('TEM m - Individual deviation from original value')
+plt.xlabel('m deviation')
+plt.ylabel('No. of Samples')
+plt.yscale('log')
 m_deviation = y_test[:, 0]-yTest[:, 0]
-plt.plot(m_deviation, 'o' )
+plt.xlim(xmin=-5, xmax = 5)
+plt.ylim([1,10**5])
+#plt.hist(m_deviation)
+counts, bins, _ = plt.hist(m_deviation)
 
-plt.subplot(3,3,4)
-plt.title('n mode predicted')
+for n, b in zip(counts, bins):
+  plt.gca().text(b + 0.05, n, int(n), rotation = 45)  # +0.1 to center text
+
+plt.subplot(3,2,3)
+plt.title('TEM n - Mean deviation for all mode combinations')
 plt.xlabel('TEM m actual')
 plt.ylabel('TEM n actual')
 cm = plt.cm.get_cmap('autumn')
@@ -133,23 +139,31 @@ for i, a in enumerate(y_test[:,0]):
   if z in ndiff.keys():
     c_list_n.append(ndiff[z])
 sc = plt.scatter(y_test[:, 0], y_test[:, 1], c=c_list_n, cmap=cm)
-plt.colorbar(sc)
+cbar2 = plt.colorbar(sc)
+cbar2.mappable.set_clim(vmin=-1,vmax=1)
 
-plt.subplot2grid(shape=(3, 3), loc=(1,1), colspan=2)
-plt.title('n actual - n predicted graph')
-#plt.xlabel('TEM n actual')
-plt.ylabel('n Deviation')
+plt.subplot(3,2,4)
+plt.title('TEM n - Individual deviation from original value')
+plt.xlabel('n deviation')
+plt.ylabel('No. of Samples')
+plt.yscale('log')
 n_deviation = y_test[:, 1]-yTest[:, 1]
-plt.plot(n_deviation, 'o')
+plt.xlim(xmin=-5, xmax = 5)
+plt.ylim([1,10**5])
+#plt.hist(n_deviation)
+counts, bins, _ = plt.hist(n_deviation)
 
-plt.subplot(3,3,7)
+for n, b in zip(counts, bins):
+  plt.gca().text(b+0.05, n, int(n), rotation = 45)  # +0.1 to center text
+
+plt.subplot(3,2,5)
 plt.title('X Offset')
 plt.xlabel('x off actual')
 plt.ylabel('x off predicted')
 plt.axis([30, 100, 30, 100])
 plt.scatter(y_test[:, 2], yTest[:, 2], color='green', marker='*')
 
-plt.subplot(3,3,8)
+plt.subplot(3,2,6)
 plt.title('Y Offset')
 plt.xlabel('y off actual')
 plt.ylabel('y off predicted')
@@ -157,6 +171,6 @@ plt.axis([30, 100, 30, 100])
 plt.scatter(y_test[:, 3], yTest[:, 3], color='green', marker='*')
 
 plt.show()   
-plt.savefig("outputf.png")
+plt.savefig("output13f.png")
 
 
