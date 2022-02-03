@@ -156,6 +156,49 @@ def show_output(y_test, y_test_pred, fname, heading):
   plt.show()   
   plt.savefig(fname)
 
+def show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred, high_noise_act, high_noise_pred, fname):
+
+  plt.figure(figsize=(10,20)) 
+
+  plt.subplot(2,1,1)
+  plt.title('TEM m - Individual deviation from original value')
+  plt.xlabel('m deviation')
+  plt.ylabel('No. of Samples')
+  plt.yscale('log')
+  low_m_deviation = low_noise_act[:, 0]-low_noise_pred[:, 0]
+  med_m_deviation = med_noise_act[:, 0]-med_noise_pred[:,0]
+  high_m_deviation = high_noise_act[:, 0]-high_noise_pred[:, 0]
+
+  plt.xlim(xmin=-5, xmax = 5)
+  plt.ylim([1,10**5])
+
+  plt.hist(low_m_deviation-0.2, width=0.2, color='b', align='mid')
+  plt.hist(med_m_deviation, width=0.2, color='g', align='mid')
+  plt.hist(high_m_deviation+0.2, width=0.2, color='r', align='mid')
+  # counts, bins, _ = plt.hist(m_deviation, bins=len(set(m_deviation)))
+  # for n, b in zip(counts, bins):
+  #   plt.gca().text(b + 0.05, n, int(n), rotation = 45)  # +0.1 to center text
+
+  plt.subplot(2,1,2)
+  plt.title('TEM n - Individual deviation from original value')
+  plt.xlabel('n deviation')
+  plt.ylabel('No. of Samples')
+  plt.yscale('log')
+  low_n_deviation = low_noise_act[:, 1]-low_noise_pred[:, 1]
+  med_n_deviation = med_noise_act[:, 1]-med_noise_pred[:,1]
+  high_n_deviation = high_noise_act[:, 1]-high_noise_pred[:, 1]
+
+  plt.xlim(xmin=-5, xmax = 5)
+  plt.ylim([1,10**5])
+
+  plt.hist(low_n_deviation-0.2, width=0.2, color='b', align='mid')
+  plt.hist(med_n_deviation, width=0.2, color='g', align='mid')
+  plt.hist(high_n_deviation+0.2, width=0.2, color='r', align='mid')
+  # counts, bins, _ = plt.hist(m_deviation, bins=len(set(m_deviation)))
+  # for n, b in zip(counts, bins):
+  #   plt.gca().text(b + 0.05, n, int(n), rotation = 45)  # +0.1 to center text
+  plt.show()
+  plt.savefig(fname)
 if __name__ == '__main__':
   #Loading the saved model
   model = keras.models.load_model('/home/siddhika/gw-modal-decomposition/new_model.h5')  
@@ -179,7 +222,7 @@ if __name__ == '__main__':
   #Plot the performance of the model
   main_op = '3out.png'
   main_heading = 'Performance of the model for the entire test dataset'
-  show_output(y_test, y_test_pred, main_op, main_heading)
+  #show_output(y_test, y_test_pred, main_op, main_heading)
 
   #Access perfromace based on noise levels - split to three ranges
   low_noise_act = []
@@ -206,17 +249,19 @@ if __name__ == '__main__':
   low_noise_pred = np.array([np.array(x) for x in low_noise_pred])
   low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.3'
   low_op = '3lowout.png'
-  show_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
+  #show_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
 
   med_noise_act = np.array([np.array(x) for x in med_noise_act])
   med_noise_pred = np.array([np.array(x) for x in med_noise_pred])
   med_noise_heading = 'Performance of the model when the noise is between 0.3 and 0.6'
   med_op = '3medout.png'
-  show_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
+  #show_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
 
   high_noise_act = np.array([np.array(x) for x in high_noise_act])
   high_noise_pred = np.array([np.array(x) for x in high_noise_pred])
   high_noise_heading = 'Performance of the model when the noise is between 0.6 and 0.9'
   high_op = '3highout.png'
-  show_output(high_noise_act, high_noise_pred, high_op, high_noise_heading)
+  #show_output(high_noise_act, high_noise_pred, high_op, high_noise_heading)
+  noise_heading = 'noiseplot.png'
+  show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred, high_noise_act, high_noise_pred, noise_heading)
 
