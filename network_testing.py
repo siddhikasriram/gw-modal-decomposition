@@ -157,54 +157,54 @@ def show_output(y_test, y_test_pred, fname, heading):
 
 def show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred, high_noise_act, high_noise_pred, fname):
 
-    plt.figure(figsize=(10,20)) 
+  plt.figure(figsize=(10,20)) 
 
-    plt.suptitle('Output according to noise ranges')
-    plt.subplot(2,1,1)
-    plt.title('TEM m - Individual deviation from original value')
-    plt.xlabel('m deviation for different noises')
-    plt.ylabel('No. of Samples')
-    plt.yscale('log')
-    low_m_deviation = low_noise_act[:, 0]-low_noise_pred[:, 0]
-    med_m_deviation = med_noise_act[:, 0]-med_noise_pred[:,0]
-    high_m_deviation = high_noise_act[:, 0]-high_noise_pred[:, 0]
+  plt.suptitle('Output according to noise ranges')
+  plt.subplot(2,1,1)
+  plt.title('TEM m - Individual deviation from original value')
+  plt.xlabel('m deviation for different noises')
+  plt.ylabel('No. of Samples')
+  plt.yscale('log')
+  low_m_deviation = low_noise_act[:, 0]-low_noise_pred[:, 0]
+  med_m_deviation = med_noise_act[:, 0]-med_noise_pred[:,0]
+  high_m_deviation = high_noise_act[:, 0]-high_noise_pred[:, 0]
 
-    plt.xlim(xmin=-5, xmax = 5)
-    plt.ylim([1,10**5])
-    
-    plt.hist([low_m_deviation,med_m_deviation, high_m_deviation],label=['0.05 - 0.3', '0.3 - 0.6', '0.6 - 0.9'])
-    plt.legend(loc='upper right')
+  plt.xlim(xmin=-5, xmax = 5)
+  plt.ylim([1,10**5])
 
-    # plt.hist(low_m_deviation-0.2, width=0.2, color='b', align='mid', bins = len(set(low_m_deviation)))
-    # plt.hist(med_m_deviation, width=0.2, color='g', align='mid')
-    # plt.hist(high_m_deviation+0.2, width=0.2, color='r', align='mid')
-    # counts, bins, _ = plt.hist(m_deviation, bins=len(set(m_deviation)))
-    # for n, b in zip(counts, bins):
-    #   plt.gca().text(b + 0.05, n, int(n), rotation = 45)  # +0.1 to center text
+  plt.hist([low_m_deviation,med_m_deviation, high_m_deviation],label=['0.05 - 0.3', '0.3 - 0.6', '0.6 - 0.9'])
+  plt.legend(loc='upper right')
 
-    plt.subplot(2,1,2)
-    plt.title('TEM n - Individual deviation from original value')
-    plt.xlabel('n deviation for different noises')
-    plt.ylabel('No. of Samples')
-    plt.yscale('log')
-    low_n_deviation = low_noise_act[:, 1]-low_noise_pred[:, 1]
-    med_n_deviation = med_noise_act[:, 1]-med_noise_pred[:,1]
-    high_n_deviation = high_noise_act[:, 1]-high_noise_pred[:, 1]
+  # plt.hist(low_m_deviation-0.2, width=0.2, color='b', align='mid', bins = len(set(low_m_deviation)))
+  # plt.hist(med_m_deviation, width=0.2, color='g', align='mid')
+  # plt.hist(high_m_deviation+0.2, width=0.2, color='r', align='mid')
+  # counts, bins, _ = plt.hist(m_deviation, bins=len(set(m_deviation)))
+  # for n, b in zip(counts, bins):
+  #   plt.gca().text(b + 0.05, n, int(n), rotation = 45)  # +0.1 to center text
 
-    plt.xlim(xmin=-5, xmax = 5)
-    plt.ylim([1,10**5])
+  plt.subplot(2,1,2)
+  plt.title('TEM n - Individual deviation from original value')
+  plt.xlabel('n deviation for different noises')
+  plt.ylabel('No. of Samples')
+  plt.yscale('log')
+  low_n_deviation = low_noise_act[:, 1]-low_noise_pred[:, 1]
+  med_n_deviation = med_noise_act[:, 1]-med_noise_pred[:,1]
+  high_n_deviation = high_noise_act[:, 1]-high_noise_pred[:, 1]
 
-    plt.hist([low_n_deviation,med_n_deviation, high_n_deviation],label=['0.05 - 0.3', '0.3 - 0.6', '0.6 - 0.9'])
-    plt.legend(loc='upper right')
+  plt.xlim(xmin=-5, xmax = 5)
+  plt.ylim([1,10**5])
 
-    # plt.hist(low_n_deviation-0.2, width=0.2, color='b', align='mid')
-    # plt.hist(med_n_deviation, width=0.2, color='g', align='mid')
-    # plt.hist(high_n_deviation+0.2, width=0.2, color='r', align='mid')
-    # counts, bins, _ = plt.hist(m_deviation, bins=len(set(m_deviation)))
-    # for n, b in zip(counts, bins):
-    #   plt.gca().text(b + 0.05, n, int(n), rotation = 45)  # +0.1 to center text
-    plt.show()
-    # plt.savefig(fname)
+  plt.hist([low_n_deviation,med_n_deviation, high_n_deviation],label=['0.05 - 0.3', '0.3 - 0.6', '0.6 - 0.9'])
+  plt.legend(loc='upper right')
+
+  # plt.hist(low_n_deviation-0.2, width=0.2, color='b', align='mid')
+  # plt.hist(med_n_deviation, width=0.2, color='g', align='mid')
+  # plt.hist(high_n_deviation+0.2, width=0.2, color='r', align='mid')
+  # counts, bins, _ = plt.hist(m_deviation, bins=len(set(m_deviation)))
+  # for n, b in zip(counts, bins):
+  #   plt.gca().text(b + 0.05, n, int(n), rotation = 45)  # +0.1 to center text
+  plt.show()
+  # plt.savefig(fname)
 
 def show_noisy_imgs(data_path, fname):
   low_noise_imgs =[]
@@ -261,12 +261,12 @@ def show_noisy_imgs(data_path, fname):
 
 if __name__ == '__main__':
   #Loading the saved model
-  model = keras.models.load_model('C:/Users/siddh/Desktop/GW CNN/GW_input_data/1064 data/test/gw-modal-decomposition/new_model.h5')
+  model = keras.models.load_model('/home/siddhika/gw-modal-decomposition/new_model.h5')
   #print(model.summary())
 
   #Fetching the test data
   img_size = 128
-  pathName = 'C:/Users/siddh/Desktop/GW CNN/GW_input_data/1064 data/test/gw-modal-decomposition/dataset'
+  pathName = '/home/siddhika/gw-modal-decomposition/Output/test'
   testing = getdata(pathName)
   x_test = np.array(testing) / 255
   x_test.reshape(-1, img_size, img_size, 1)
