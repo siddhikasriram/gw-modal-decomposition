@@ -11,6 +11,7 @@ import random
 from PIL import Image
 
 random.seed(7561)
+
 def getdata(data_path):
   #print(len(os.listdir(data_path)))
   data=[]
@@ -84,7 +85,7 @@ def show_output(y_test, y_test_pred, fname, heading):
   plt.title('TEM m - Mean deviation for all mode combinations')
   plt.xlabel('TEM m actual')
   plt.ylabel('TEM n actual')
-  cm = plt.cm.get_cmap('autumn')
+  cm = plt.cm.get_cmap('brg')
   actual = [tuple(x[:2]) for x in actual]
   c_list_m = [] # list has to be passed for python version 3.7
 
@@ -115,7 +116,7 @@ def show_output(y_test, y_test_pred, fname, heading):
   plt.title('TEM n - Mean deviation for all mode combinations')
   plt.xlabel('TEM m actual')
   plt.ylabel('TEM n actual')
-  cm = plt.cm.get_cmap('autumn')
+  cm = plt.cm.get_cmap('brg')
   c_list_n = []
   for i, a in enumerate(y_test[:,0]):
     p = y_test_pred[i:, 0]
@@ -153,7 +154,7 @@ def show_output(y_test, y_test_pred, fname, heading):
   plt.scatter(y_test[:, 3], y_test_pred[:, 3], color='green', marker='*')
 
   plt.show()   
-  #plt.savefig(fname)
+  plt.savefig(fname)
 
 def show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred, high_noise_act, high_noise_pred, fname):
 
@@ -171,16 +172,9 @@ def show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred
 
   plt.xlim(xmin=-5, xmax = 5)
   plt.ylim([1,10**5])
-
+  
   plt.hist([low_m_deviation,med_m_deviation, high_m_deviation],label=['0.05 - 0.3', '0.3 - 0.6', '0.6 - 0.9'])
   plt.legend(loc='upper right')
-
-  # plt.hist(low_m_deviation-0.2, width=0.2, color='b', align='mid', bins = len(set(low_m_deviation)))
-  # plt.hist(med_m_deviation, width=0.2, color='g', align='mid')
-  # plt.hist(high_m_deviation+0.2, width=0.2, color='r', align='mid')
-  # counts, bins, _ = plt.hist(m_deviation, bins=len(set(m_deviation)))
-  # for n, b in zip(counts, bins):
-  #   plt.gca().text(b + 0.05, n, int(n), rotation = 45)  # +0.1 to center text
 
   plt.subplot(2,1,2)
   plt.title('TEM n - Individual deviation from original value')
@@ -197,14 +191,8 @@ def show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred
   plt.hist([low_n_deviation,med_n_deviation, high_n_deviation],label=['0.05 - 0.3', '0.3 - 0.6', '0.6 - 0.9'])
   plt.legend(loc='upper right')
 
-  # plt.hist(low_n_deviation-0.2, width=0.2, color='b', align='mid')
-  # plt.hist(med_n_deviation, width=0.2, color='g', align='mid')
-  # plt.hist(high_n_deviation+0.2, width=0.2, color='r', align='mid')
-  # counts, bins, _ = plt.hist(m_deviation, bins=len(set(m_deviation)))
-  # for n, b in zip(counts, bins):
-  #   plt.gca().text(b + 0.05, n, int(n), rotation = 45)  # +0.1 to center text
   plt.show()
-  # plt.savefig(fname)
+  plt.savefig(fname)
 
 def show_noisy_imgs(data_path, fname):
   low_noise_imgs =[]
@@ -247,7 +235,7 @@ def show_noisy_imgs(data_path, fname):
     cols =3 
     img_count = 0
     fig, axes = plt.subplots(nrows=rows, ncols=cols, figsize=(20,20))
-    fig.suptitle(f'{_}')
+    fig.suptitle(f'{fname}{_}')
 
     for i in range(rows):
       for j in range(cols):        
@@ -257,7 +245,7 @@ def show_noisy_imgs(data_path, fname):
           axes[i,j].set_title(f'{l[img_count][1]}')
           img_count+=1
     plt.show()  
-    plt.savefig(f'{fname}{_}.png')
+    plt.savefig(f'{fname}{_}')
 
 if __name__ == '__main__':
   #Loading the saved model
@@ -288,7 +276,7 @@ if __name__ == '__main__':
   #Plot the performance of the model
   main_op = '3out.png'
   main_heading = 'Performance of the model for the entire test dataset'
-  #show_output(y_test, y_test_pred, main_op, main_heading)
+  show_output(y_test, y_test_pred, main_op, main_heading)
 
   #Access perfromace based on noise levels - split to three ranges
   low_noise_act = []
@@ -313,25 +301,29 @@ if __name__ == '__main__':
         
   low_noise_act = np.array([np.array(x) for x in low_noise_act])
   low_noise_pred = np.array([np.array(x) for x in low_noise_pred])
-  # low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.3'
-  # low_op = '3lowout.png'
-  # show_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
+  low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.3'
+  low_op = '3lowout.png'
+  show_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
 
   med_noise_act = np.array([np.array(x) for x in med_noise_act])
   med_noise_pred = np.array([np.array(x) for x in med_noise_pred])
-  # med_noise_heading = 'Performance of the model when the noise is between 0.3 and 0.6'
-  # med_op = '3medout.png'
-  # show_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
+  med_noise_heading = 'Performance of the model when the noise is between 0.3 and 0.6'
+  med_op = '3medout.png'
+  show_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
 
   high_noise_act = np.array([np.array(x) for x in high_noise_act])
   high_noise_pred = np.array([np.array(x) for x in high_noise_pred])
-  # high_noise_heading = 'Performance of the model when the noise is between 0.6 and 0.9'
-  # high_op = '3highout.png'
-  # show_output(high_noise_act, high_noise_pred, high_op, high_noise_heading)
+  high_noise_heading = 'Performance of the model when the noise is between 0.6 and 0.9'
+  high_op = '3highout.png'
+  show_output(high_noise_act, high_noise_pred, high_op, high_noise_heading)
 
-  #show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred, high_noise_act, high_noise_pred)
-  savename = 'noisy_images'
-  show_noisy_imgs(pathName, savename)
+  #combined plot
+  noise_op = '3noisyplot.png'
+  #show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred, high_noise_act, high_noise_pred, noise_op)
+  
+  #what are those noisy imgs?
+  savename = 'noise_'
+  #show_noisy_imgs(pathName, savename)
 
   
 
