@@ -46,9 +46,9 @@ def labelling (fileName):
   yParam = np.array([np.array(x) for x in yParam])
   return yParam
 
-def show_output(y_test, y_test_pred, fname, heading, noise):
+def show_output(y_test, y_test_pred, fname, heading):
 
-  catalog = open(f'results_{fname}.txt', 'w')
+  #catalog = open(f'results_{fname}.txt', 'w')
   sample_size = len(y_test)
   actual = y_test.copy()
   predicted = y_test_pred.copy()
@@ -155,13 +155,13 @@ def show_output(y_test, y_test_pred, fname, heading, noise):
   plt.axis([30, 100, 30, 100])
   plt.scatter(y_test[:, 3], y_test_pred[:, 3], color='green', marker='*')
 
-  for i, (a,p,n) in enumerate(zip(y_test, y_test_pred, noise)):
+  #for i, (a,p,n) in enumerate(zip(y_test, y_test_pred, noise)):
     #print(int(y_test[i, 0]), int(y_test_pred[i,0]), int(y_test[i, 1]), int(y_test_pred[i, 1]), int(y_test[i, 2]), int(y_test_pred[i, 2]), int(y_test[i, 3]), int(y_test_pred[i, 3]), noise[i])
-    catalog.write(" %d %d %d %d %d %d %d %d %.2f \n" %(y_test[i, 0], y_test_pred[i,0], y_test[i, 1], y_test_pred[i, 1], y_test[i, 2], y_test_pred[i, 2],y_test[i, 3], y_test_pred[i, 3], noise[i]))
+    #catalog.write(" %d %f %d %f %d %f %d %f %.2f \n" %(y_test[i, 0], y_test_pred[i,0], y_test[i, 1], y_test_pred[i, 1], y_test[i, 2], y_test_pred[i, 2],y_test[i, 3], y_test_pred[i, 3], noise[i]))
     
-  catalog.close()
+  #catalog.close()
   plt.show()   
-  plt.savefig(fname)
+  #plt.savefig(fname)
 
 def show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred, high_noise_act, high_noise_pred, fname):
 
@@ -210,13 +210,17 @@ def show_noisy_imgs(data_path, fname):
   med_noise_titles=[]
   high_noise_titles=[]
   name_list=[]
+
+
   for im in os.listdir(data_path):
     #img_path = os.path.join(data_path, im)
     img_arr = Image.open(os.path.join(data_path, im))
     img_arr = np.asarray(img_arr)
+    
     noise = float(im[13:17])
-    print(noise)
+
     if noise >= 0.05 and noise <= 0.3:
+      
       low_noise_imgs.append(img_arr)
       low_noise_titles.append(im)
     elif noise > 0.3 and noise <=0.6:
@@ -235,9 +239,26 @@ def show_noisy_imgs(data_path, fname):
   name_list.append(high_noise_titles)
 
   for _, (img, name) in enumerate(zip(img_list, name_list)):
-    #l = random.sample(img, 9)
     combined = list(zip(img, name))
-    l = random.sample(combined, 9)
+    l=random.sample(combined,9)
+    data=[]
+    for d, n in l:
+      img_arr = cv2.imread(os.path.join(data_path, n), 0)#[..., ::-1]
+      img_arr = img_arr[..., np.newaxis]
+      data.append(img_arr)
+    
+      img_size = 128
+      x_test = np.array(data) / 255
+      x_test.reshape(-1, img_size, img_size, 1)
+  
+    #Testing the model with the test data
+    y_test_pred = model.predict(x_test)
+    # Rounding off as modes are integers
+    y_test_pred[:,0] = [round(x) for x in y_test_pred[:,0]]
+    y_test_pred[:,1] = [round(x) for x in y_test_pred[:,1]]
+    y_test_pred[:,2] = [round(x) for x in y_test_pred[:,2]]
+    y_test_pred[:,3] = [round(x) for x in y_test_pred[:,3]]
+
     rows=3
     cols =3 
     img_count = 0
@@ -249,7 +270,7 @@ def show_noisy_imgs(data_path, fname):
         if img_count < len(l):
           axes[i, j].imshow(l[img_count][0])
           #print(l[img_count][1])
-          axes[i,j].set_title(f'{l[img_count][1]}')
+          axes[i,j].set_title(f'{l[img_count][1]}\n Predicted: {y_test_pred[img_count,0]}, {y_test_pred[img_count, 1]}, {y_test_pred[img_count, 2]}, {y_test_pred[img_count, 3]}')
           img_count+=1
     plt.show()  
     plt.savefig(f'{fname}{_}')
@@ -286,9 +307,9 @@ if __name__ == '__main__':
   for i, noise in enumerate(y_test[:, 4]):
     noiselist.append(noise)
   
-  main_op = '6out.png'
+  main_op = '5out.png'
   main_heading = 'Performance of the model for the entire test dataset'
-  show_output(y_test, y_test_pred, main_op, main_heading, noiselist)
+  #show_output(y_test, y_test_pred, main_op, main_heading, noiselist)
 
   #Access perfromace based on noise levels - split to three ranges
   low_noise_act = []
@@ -297,6 +318,7 @@ if __name__ == '__main__':
   med_noise_pred =[]
   high_noise_act =[]
   high_noise_pred =[]
+  #for catalog
   lownoiselist=[]
   mednoiselist=[]
   highnoiselist=[]
@@ -320,20 +342,20 @@ if __name__ == '__main__':
   low_noise_act = np.array([np.array(x) for x in low_noise_act])
   low_noise_pred = np.array([np.array(x) for x in low_noise_pred])
   low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.3'
-  low_op = '6lowout.png'
-  show_output(low_noise_act, low_noise_pred, low_op, low_noise_heading, lownoiselist)
+  low_op = '5lowout.png'
+  #show_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
 
   med_noise_act = np.array([np.array(x) for x in med_noise_act])
   med_noise_pred = np.array([np.array(x) for x in med_noise_pred])
   med_noise_heading = 'Performance of the model when the noise is between 0.3 and 0.6'
-  med_op = '6medout.png'
-  show_output(med_noise_act, med_noise_pred, med_op, med_noise_heading, mednoiselist)
+  med_op = '5medout.png'
+  #show_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
 
   high_noise_act = np.array([np.array(x) for x in high_noise_act])
   high_noise_pred = np.array([np.array(x) for x in high_noise_pred])
   high_noise_heading = 'Performance of the model when the noise is between 0.6 and 0.9'
-  high_op = '6highout.png'
-  show_output(high_noise_act, high_noise_pred, high_op, high_noise_heading, highnoiselist)
+  high_op = '5highout.png'
+  #show_output(high_noise_act, high_noise_pred, high_op, high_noise_heading)
 
   #combined plot
   noise_op = '3noisyplot.png'
@@ -341,7 +363,7 @@ if __name__ == '__main__':
   
   #what are those noisy imgs?
   savename = 'noise_'
-  #show_noisy_imgs(pathName, savename)
+  show_noisy_imgs(pathName, savename)
 
   
 
