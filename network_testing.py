@@ -46,8 +46,10 @@ def labelling (fileName):
   yParam = np.array([np.array(x) for x in yParam])
   return yParam
 
-def show_output(y_test, y_test_pred, fname, heading):
+def show_output(y_test, y_test_pred, fname, heading, noise):
 
+  catalog = open(f'results_{fname}.txt', 'w')
+  sample_size = len(y_test)
   actual = y_test.copy()
   predicted = y_test_pred.copy()
   actual = [tuple(x[:2]) for x in actual] 
@@ -79,7 +81,7 @@ def show_output(y_test, y_test_pred, fname, heading):
     ndiff[k]=mean(v)
 
   plt.figure(figsize=(13,20)) # verticle rectangle sheet for 3 x 2 subplots
-  plt.suptitle(heading)
+  plt.suptitle(f'{heading} with {sample_size} samples')
 
   plt.subplot(3,2,1)
   plt.title('TEM m - Mean deviation for all mode combinations')
@@ -108,7 +110,7 @@ def show_output(y_test, y_test_pred, fname, heading):
   m_deviation = y_test[:, 0]-y_test_pred[:, 0]
   plt.xlim(xmin=-5, xmax = 5)
   plt.ylim([1,10**5])
-  counts, bins, _ = plt.hist(m_deviation, bins=len(set(m_deviation)), edgecolor="white")
+  counts, bins, _ = plt.hist(m_deviation, bins=len(set(m_deviation)))
   for n, b in zip(counts, bins):
     plt.gca().text(b + 0.05, n, int(n), rotation = 45)  # +0.1 to center text
 
@@ -153,6 +155,11 @@ def show_output(y_test, y_test_pred, fname, heading):
   plt.axis([30, 100, 30, 100])
   plt.scatter(y_test[:, 3], y_test_pred[:, 3], color='green', marker='*')
 
+  for i, (a,p,n) in enumerate(zip(y_test, y_test_pred, noise)):
+    #print(int(y_test[i, 0]), int(y_test_pred[i,0]), int(y_test[i, 1]), int(y_test_pred[i, 1]), int(y_test[i, 2]), int(y_test_pred[i, 2]), int(y_test[i, 3]), int(y_test_pred[i, 3]), noise[i])
+    catalog.write(" %d %f %d %f %d %f %d %f %.2f \n" %(y_test[i, 0], y_test_pred[i,0], y_test[i, 1], y_test_pred[i, 1], y_test[i, 2], y_test_pred[i, 2],y_test[i, 3], y_test_pred[i, 3], noise[i]))
+    
+  catalog.close()
   plt.show()   
   plt.savefig(fname)
 
@@ -274,9 +281,14 @@ if __name__ == '__main__':
   #evaluate = model.evaluate(x_test, y_test)
 
   #Plot the performance of the model
-  main_op = '4out.png'
+  noiselist=[]
+  print(y_test)
+  for i, noise in enumerate(y_test[:, 4]):
+    noiselist.append(noise)
+  
+  main_op = '5out.png'
   main_heading = 'Performance of the model for the entire test dataset'
-  show_output(y_test, y_test_pred, main_op, main_heading)
+  show_output(y_test, y_test_pred, main_op, main_heading, noiselist)
 
   #Access perfromace based on noise levels - split to three ranges
   low_noise_act = []
@@ -285,6 +297,9 @@ if __name__ == '__main__':
   med_noise_pred =[]
   high_noise_act =[]
   high_noise_pred =[]
+  lownoiselist=[]
+  mednoiselist=[]
+  highnoiselist=[]
 
   for ind, act in enumerate(y_test):
     pred = y_test_pred[ind]
@@ -292,30 +307,33 @@ if __name__ == '__main__':
     if noise >= 0.05 and noise <= 0.3:
       low_noise_act.append(y_test[ind,0:4])
       low_noise_pred.append(y_test_pred[ind, 0:4])
+      lownoiselist.append(noise)
     elif noise > 0.3 and noise <=0.6:
       med_noise_act.append(y_test[ind,0:4])
       med_noise_pred.append(y_test_pred[ind, 0:4])
+      mednoiselist.append(noise)
     else:
       high_noise_act.append(y_test[ind,0:4])
       high_noise_pred.append(y_test_pred[ind, 0:4])
-        
+      highnoiselist.append(noise)  
+
   low_noise_act = np.array([np.array(x) for x in low_noise_act])
   low_noise_pred = np.array([np.array(x) for x in low_noise_pred])
   low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.3'
-  low_op = '4lowout.png'
-  show_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
+  low_op = '5lowout.png'
+  show_output(low_noise_act, low_noise_pred, low_op, low_noise_heading, lownoiselist)
 
   med_noise_act = np.array([np.array(x) for x in med_noise_act])
   med_noise_pred = np.array([np.array(x) for x in med_noise_pred])
   med_noise_heading = 'Performance of the model when the noise is between 0.3 and 0.6'
-  med_op = '4medout.png'
-  show_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
+  med_op = '5medout.png'
+  show_output(med_noise_act, med_noise_pred, med_op, med_noise_heading, mednoiselist)
 
   high_noise_act = np.array([np.array(x) for x in high_noise_act])
   high_noise_pred = np.array([np.array(x) for x in high_noise_pred])
   high_noise_heading = 'Performance of the model when the noise is between 0.6 and 0.9'
-  high_op = '4highout.png'
-  show_output(high_noise_act, high_noise_pred, high_op, high_noise_heading)
+  high_op = '5highout.png'
+  show_output(high_noise_act, high_noise_pred, high_op, high_noise_heading, highnoiselist)
 
   #combined plot
   noise_op = '3noisyplot.png'
