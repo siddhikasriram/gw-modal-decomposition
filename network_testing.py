@@ -172,7 +172,7 @@ def show_output(y_test, y_test_pred, fname, heading):
     
   #catalog.close()
   plt.show()   
-  #plt.savefig(fname)
+  plt.savefig(fname)
 
 def show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred, high_noise_act, high_noise_pred, fname):
 
