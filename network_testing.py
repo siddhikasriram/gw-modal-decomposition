@@ -199,7 +199,7 @@ def show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred
   plt.xlim(xmin=-5, xmax = 5)
   plt.ylim([1,10**5])
   
-  plt.hist([low_m_deviation,med_m_deviation, high_m_deviation],bins = len(set(high_m_deviation)),label=['0.05 - 0.3', '0.3 - 0.6', '0.6 - 0.9'])
+  plt.hist([low_m_deviation,med_m_deviation, high_m_deviation],bins = 10,label=['0.05 - 0.3', '0.3 - 0.6', '0.6 - 0.9'])
   plt.legend(loc='upper right')
 
   plt.subplot(2,1,2)
@@ -214,7 +214,7 @@ def show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred
   plt.xlim(xmin=-5, xmax = 5)
   plt.ylim([1,10**5])
 
-  plt.hist([low_n_deviation,med_n_deviation, high_n_deviation],bins = len(set(high_n_deviation)),label=['0.05 - 0.3', '0.3 - 0.6', '0.6 - 0.9'])
+  plt.hist([low_n_deviation,med_n_deviation, high_n_deviation],bins = 10,label=['0.05 - 0.3', '0.3 - 0.6', '0.6 - 0.9'])
   plt.legend(loc='upper right')
 
   plt.show()
@@ -388,7 +388,7 @@ if __name__ == '__main__':
   #show_output(high_noise_act, high_noise_pred, high_op, high_noise_heading)
 
   #combined plot
-  noise_op = '5noisyplot.png'
+  noise_op = '6noisyplot.png'
   show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred, high_noise_act, high_noise_pred, noise_op)
   
   #what are those noisy imgs?
