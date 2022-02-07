@@ -331,7 +331,7 @@ if __name__ == '__main__':
   
   main_op = '7out.png'
   main_heading = 'Performance of the model for the entire test dataset'
-  show_output(y_test, y_test_pred, main_op, main_heading, noiselist)
+  show_output(y_test, y_test_pred, main_op, main_heading)
 
   #Access perfromace based on noise levels - split to three ranges
   low_noise_act = []
