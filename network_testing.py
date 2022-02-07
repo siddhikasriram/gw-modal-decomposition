@@ -175,12 +175,12 @@ def show_output(y_test, y_test_pred, fname, heading):
   plt.savefig(fname)
 
 def show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred, high_noise_act, high_noise_pred, fname):
-  params = {'axes.labelsize': 14, #Fontsize of the x and y labels
-        'axes.titlesize': 18, #Fontsize of the axes title
-        'figure.titlesize': 22, #Size of the figure title (.suptitle())
-        'xtick.labelsize': 13, #Fontsize of the tick labels
-        'ytick.labelsize': 13,
-        'legend.fontsize': 15} #Fontsize for legends (plt.legend()
+  params = {'axes.labelsize': 16, #Fontsize of the x and y labels
+        'axes.titlesize': 22, #Fontsize of the axes title
+        'figure.titlesize': 25, #Size of the figure title (.suptitle())
+        'xtick.labelsize': 15, #Fontsize of the tick labels
+        'ytick.labelsize': 15,
+        'legend.fontsize': 18} #Fontsize for legends (plt.legend()
 
   plt.rcParams.update(params) 
 
@@ -199,7 +199,7 @@ def show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred
   plt.xlim(xmin=-5, xmax = 5)
   plt.ylim([1,10**5])
   
-  plt.hist([low_m_deviation,med_m_deviation, high_m_deviation],label=['0.05 - 0.3', '0.3 - 0.6', '0.6 - 0.9'])
+  plt.hist([low_m_deviation,med_m_deviation, high_m_deviation],bins = len(set(high_m_deviation)),label=['0.05 - 0.3', '0.3 - 0.6', '0.6 - 0.9'])
   plt.legend(loc='upper right')
 
   plt.subplot(2,1,2)
@@ -214,7 +214,7 @@ def show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred
   plt.xlim(xmin=-5, xmax = 5)
   plt.ylim([1,10**5])
 
-  plt.hist([low_n_deviation,med_n_deviation, high_n_deviation],label=['0.05 - 0.3', '0.3 - 0.6', '0.6 - 0.9'])
+  plt.hist([low_n_deviation,med_n_deviation, high_n_deviation],bins = len(set(high_n_deviation)),label=['0.05 - 0.3', '0.3 - 0.6', '0.6 - 0.9'])
   plt.legend(loc='upper right')
 
   plt.show()
@@ -388,7 +388,7 @@ if __name__ == '__main__':
   #show_output(high_noise_act, high_noise_pred, high_op, high_noise_heading)
 
   #combined plot
-  noise_op = '4noisyplot.png'
+  noise_op = '5noisyplot.png'
   show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred, high_noise_act, high_noise_pred, noise_op)
   
   #what are those noisy imgs?
