@@ -175,8 +175,16 @@ def show_output(y_test, y_test_pred, fname, heading):
   plt.savefig(fname)
 
 def show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred, high_noise_act, high_noise_pred, fname):
+  params = {'axes.labelsize': 14, #Fontsize of the x and y labels
+        'axes.titlesize': 18, #Fontsize of the axes title
+        'figure.titlesize': 22, #Size of the figure title (.suptitle())
+        'xtick.labelsize': 13, #Fontsize of the tick labels
+        'ytick.labelsize': 13,
+        'legend.fontsize': 15} #Fontsize for legends (plt.legend()
 
-  plt.figure(figsize=(10,20)) 
+  plt.rcParams.update(params) 
+
+  plt.figure(figsize=(20,20)) 
 
   plt.suptitle('Output according to noise ranges')
   plt.subplot(2,1,1)
@@ -331,7 +339,7 @@ if __name__ == '__main__':
   
   main_op = '8out.png'
   main_heading = 'Performance of the model for the entire test dataset'
-  show_output(y_test, y_test_pred, main_op, main_heading)
+  #show_output(y_test, y_test_pred, main_op, main_heading)
 
   #Access perfromace based on noise levels - split to three ranges
   low_noise_act = []
@@ -365,23 +373,23 @@ if __name__ == '__main__':
   low_noise_pred = np.array([np.array(x) for x in low_noise_pred])
   low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.3'
   low_op = '8lowout.png'
-  show_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
+  #show_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
 
   med_noise_act = np.array([np.array(x) for x in med_noise_act])
   med_noise_pred = np.array([np.array(x) for x in med_noise_pred])
   med_noise_heading = 'Performance of the model when the noise is between 0.3 and 0.6'
   med_op = '8medout.png'
-  show_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
+  #show_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
 
   high_noise_act = np.array([np.array(x) for x in high_noise_act])
   high_noise_pred = np.array([np.array(x) for x in high_noise_pred])
   high_noise_heading = 'Performance of the model when the noise is between 0.6 and 0.9'
   high_op = '8highout.png'
-  show_output(high_noise_act, high_noise_pred, high_op, high_noise_heading)
+  #show_output(high_noise_act, high_noise_pred, high_op, high_noise_heading)
 
   #combined plot
-  noise_op = '3noisyplot.png'
-  #show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred, high_noise_act, high_noise_pred, noise_op)
+  noise_op = '4noisyplot.png'
+  show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred, high_noise_act, high_noise_pred, noise_op)
   
   #what are those noisy imgs?
   savename = '1noise_'
