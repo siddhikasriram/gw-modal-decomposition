@@ -329,7 +329,7 @@ if __name__ == '__main__':
   for i, noise in enumerate(y_test[:, 4]):
     noiselist.append(noise)
   
-  main_op = '7out.png'
+  main_op = '8out.png'
   main_heading = 'Performance of the model for the entire test dataset'
   show_output(y_test, y_test_pred, main_op, main_heading)
 
@@ -364,19 +364,19 @@ if __name__ == '__main__':
   low_noise_act = np.array([np.array(x) for x in low_noise_act])
   low_noise_pred = np.array([np.array(x) for x in low_noise_pred])
   low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.3'
-  low_op = '7lowout.png'
+  low_op = '8lowout.png'
   show_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
 
   med_noise_act = np.array([np.array(x) for x in med_noise_act])
   med_noise_pred = np.array([np.array(x) for x in med_noise_pred])
   med_noise_heading = 'Performance of the model when the noise is between 0.3 and 0.6'
-  med_op = '7medout.png'
+  med_op = '8medout.png'
   show_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
 
   high_noise_act = np.array([np.array(x) for x in high_noise_act])
   high_noise_pred = np.array([np.array(x) for x in high_noise_pred])
   high_noise_heading = 'Performance of the model when the noise is between 0.6 and 0.9'
-  high_op = '7highout.png'
+  high_op = '8highout.png'
   show_output(high_noise_act, high_noise_pred, high_op, high_noise_heading)
 
   #combined plot
@@ -385,7 +385,7 @@ if __name__ == '__main__':
   
   #what are those noisy imgs?
   savename = '1noise_'
-  show_noisy_imgs(pathName, savename)
+  #show_noisy_imgs(pathName, savename)
 
   
 
