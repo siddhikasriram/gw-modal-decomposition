@@ -52,7 +52,7 @@ def show_output(y_test, y_test_pred, fname, heading):
   #default size = 10
   params = {'axes.labelsize': 13, #Fontsize of the x and y labels
         'axes.titlesize': 15, #Fontsize of the axes title
-        'figure.titlesize': 18, #Size of the figure title (.suptitle())
+        'figure.titlesize': 25, #Size of the figure title (.suptitle())
         'xtick.labelsize': 12, #Fontsize of the tick labels
         'ytick.labelsize': 12,
         'legend.fontsize': 12} #Fontsize for legends (plt.legend()
