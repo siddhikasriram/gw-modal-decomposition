@@ -11,7 +11,8 @@ import random
 from PIL import Image
 
 random.seed(7561)
-
+#plt.rcParams.update({'font.size': 20})
+  
 def getdata(data_path):
   #print(len(os.listdir(data_path)))
   data=[]
@@ -47,6 +48,16 @@ def labelling (fileName):
   return yParam
 
 def show_output(y_test, y_test_pred, fname, heading):
+
+  #default size = 10
+  params = {'axes.labelsize': 13, #Fontsize of the x and y labels
+        'axes.titlesize': 15, #Fontsize of the axes title
+        'figure.titlesize': 18, #Size of the figure title (.suptitle())
+        'xtick.labelsize': 12, #Fontsize of the tick labels
+        'ytick.labelsize': 12,
+        'legend.fontsize': 12} #Fontsize for legends (plt.legend()
+
+  plt.rcParams.update(params) 
 
   #catalog = open(f'results_{fname}.txt', 'w')
   sample_size = len(y_test)
@@ -92,7 +103,7 @@ def show_output(y_test, y_test_pred, fname, heading):
   c_list_m = [] # list has to be passed for python version 3.7
 
   for i, a in enumerate(y_test[:,0]):
-    print(i)
+    
     p = y_test_pred[i:, 0]
     z = actual[i]
     if z in mdiff.keys():
@@ -202,6 +213,17 @@ def show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred
   plt.savefig(fname)
 
 def show_noisy_imgs(data_path, fname):
+
+  #default size = 10
+  params = {'axes.labelsize': 14, #Fontsize of the x and y labels
+        'axes.titlesize': 17, #Fontsize of the axes title
+        'figure.titlesize': 22, #Size of the figure title (.suptitle())
+        'xtick.labelsize': 12, #Fontsize of the tick labels
+        'ytick.labelsize': 12,
+        'legend.fontsize': 12} #Fontsize for legends (plt.legend()
+
+  plt.rcParams.update(params) 
+
   low_noise_imgs =[]
   med_noise_imgs =[]
   high_noise_imgs=[]
@@ -263,7 +285,7 @@ def show_noisy_imgs(data_path, fname):
     cols =3 
     img_count = 0
     fig, axes = plt.subplots(nrows=rows, ncols=cols, figsize=(20,20))
-    fig.suptitle(f'{fname}{_}')
+    fig.suptitle(f'{fname}{_}') 
 
     for i in range(rows):
       for j in range(cols):        
@@ -303,13 +325,13 @@ if __name__ == '__main__':
 
   #Plot the performance of the model
   noiselist=[]
-  print(y_test)
+  #print(y_test)
   for i, noise in enumerate(y_test[:, 4]):
     noiselist.append(noise)
   
-  main_op = '5out.png'
+  main_op = '7out.png'
   main_heading = 'Performance of the model for the entire test dataset'
-  #show_output(y_test, y_test_pred, main_op, main_heading, noiselist)
+  show_output(y_test, y_test_pred, main_op, main_heading, noiselist)
 
   #Access perfromace based on noise levels - split to three ranges
   low_noise_act = []
@@ -342,27 +364,27 @@ if __name__ == '__main__':
   low_noise_act = np.array([np.array(x) for x in low_noise_act])
   low_noise_pred = np.array([np.array(x) for x in low_noise_pred])
   low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.3'
-  low_op = '5lowout.png'
-  #show_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
+  low_op = '7lowout.png'
+  show_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
 
   med_noise_act = np.array([np.array(x) for x in med_noise_act])
   med_noise_pred = np.array([np.array(x) for x in med_noise_pred])
   med_noise_heading = 'Performance of the model when the noise is between 0.3 and 0.6'
-  med_op = '5medout.png'
-  #show_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
+  med_op = '7medout.png'
+  show_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
 
   high_noise_act = np.array([np.array(x) for x in high_noise_act])
   high_noise_pred = np.array([np.array(x) for x in high_noise_pred])
   high_noise_heading = 'Performance of the model when the noise is between 0.6 and 0.9'
-  high_op = '5highout.png'
-  #show_output(high_noise_act, high_noise_pred, high_op, high_noise_heading)
+  high_op = '7highout.png'
+  show_output(high_noise_act, high_noise_pred, high_op, high_noise_heading)
 
   #combined plot
   noise_op = '3noisyplot.png'
   #show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred, high_noise_act, high_noise_pred, noise_op)
   
   #what are those noisy imgs?
-  savename = 'noise_'
+  savename = '1noise_'
   show_noisy_imgs(pathName, savename)
 
   
