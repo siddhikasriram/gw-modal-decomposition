@@ -27,6 +27,7 @@ from keras.layers.convolutional import MaxPooling2D
 from keras.layers import BatchNormalization
 from sklearn.model_selection import GridSearchCV
 from tensorflow.keras.optimizers import Adam
+from keras.optimizers import adam_v2
 from keras.layers import Dense, Conv2D , MaxPool2D 
 from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.model_selection import StratifiedKFold
@@ -67,9 +68,8 @@ print('Training: ', len(train_FileNames))
 print('Validation: ', len(val_FileNames))
 print('Testing: ', len(test_FileNames))
 
-'''
 for name in (test_FileNames):
-  shutil.copy('/home/siddhika/dataset/'+name, '/home/siddhika/gw-modal-decomposition/Output/test')
+  shutil.copy('/home/siddhika/dataset/'+name, '/home/siddhika/gw-modal-decomposition/Output/012test')
 
 
 #name = train_FileNames[0]
@@ -189,7 +189,7 @@ def model_def(dropout_rate = 0.1):
 
   model.summary()
 
-  opt = adam(learning_rate=0.001)
+  opt = adam_v2.Adam(learning_rate=0.001)
   model.compile(optimizer = opt , loss ='mean_squared_error' , metrics = ['accuracy'])
   return model
 
@@ -220,7 +220,7 @@ history = model.fit(x_train, yTrain, epochs = 50, validation_data = (x_val, yVal
 #print(results.mean())
 
 #saving the model
-model.model.save('new_model.h5')
+model.model.save('012new_model.h5')
 print("Saved model to disk")
 print(history.history.keys())
 
@@ -249,4 +249,3 @@ plt.savefig("result.png")
 #print(predict)
 print(yTest)
 
-'''
