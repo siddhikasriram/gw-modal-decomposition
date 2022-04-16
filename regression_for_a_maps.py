@@ -1,4 +1,3 @@
-
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.wrappers.scikit_learn import KerasRegressor
@@ -11,7 +10,6 @@ from collections import Counter
 import tensorflow 
 import keras
 from keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.optimizers import Adam
 from sklearn.metrics import classification_report, confusion_matrix
 import cv2
 import os
@@ -28,13 +26,14 @@ from keras.layers.convolutional import Conv2D
 from keras.layers.convolutional import MaxPooling2D
 from keras.layers import BatchNormalization
 from sklearn.model_selection import GridSearchCV
-from keras.optimizers import adam
+from tensorflow.keras.optimizers import Adam
 from keras.layers import Dense, Conv2D , MaxPool2D 
 from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.model_selection import StratifiedKFold
 from sklearn.model_selection import cross_val_score
 # load dataset
 root_dir = '/home/siddhika/dataset/'
+#root_dir = 'C:/Users/siddh/Desktop/GW CNN/GW_input_data/1064 data/test/gw-modal-decomposition/dataset/normal'
 allFileNames = os.listdir(root_dir)
 
 #os.makedirs("Output" +'/train')
@@ -48,20 +47,30 @@ test_ratio = 0.15
 
 src = root_dir # Folder to copy images from
 
-#import glob
-#allFileNames = glob.glob('*.png')
-np.random.shuffle(allFileNames)
-train_FileNames, val_FileNames, test_FileNames = np.split(np.array(allFileNames),
-                                                           [int(len(allFileNames)* 0.7), 
-                                                               int(len(allFileNames)* 0.85)])
 
-print('Total images: ', len(allFileNames))
+np.random.shuffle(allFileNames)
+# train_FileNames, val_FileNames, test_FileNames = np.split(np.array(allFileNames), [int(len(allFileNames)* 0.7), int(len(allFileNames)* 0.85)])
+
+# to filter 0, 1 and 2 modes to check biasing 
+filteredFiles = []
+for name in (allFileNames):
+  if int(name[9]) < 3 and int(name[11]) < 3:
+    filteredFiles.append(name)
+
+train_FileNames, val_FileNames, test_FileNames = np.split(np.array(filteredFiles), [int(len(filteredFiles)* 0.7), int(len(filteredFiles)* 0.85)])
+
+
+print(filteredFiles)
+
+print('Total images: ', len(filteredFiles))
 print('Training: ', len(train_FileNames))
 print('Validation: ', len(val_FileNames))
 print('Testing: ', len(test_FileNames))
 
+'''
 for name in (test_FileNames):
   shutil.copy('/home/siddhika/dataset/'+name, '/home/siddhika/gw-modal-decomposition/Output/test')
+
 
 #name = train_FileNames[0]
 #print(name)
@@ -239,3 +248,5 @@ plt.savefig("result.png")
 #predict = model.predict(x_test)
 #print(predict)
 print(yTest)
+
+'''
