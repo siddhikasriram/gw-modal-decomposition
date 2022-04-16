@@ -26,7 +26,7 @@ from keras.layers.convolutional import Conv2D
 from keras.layers.convolutional import MaxPooling2D
 from keras.layers import BatchNormalization
 from sklearn.model_selection import GridSearchCV
-from tensorflow.keras.optimizers import Adam
+#from tensorflow.keras.optimizers import Adam
 #from keras.optimizers import adam_v2
 from keras.layers import Dense, Conv2D , MaxPool2D 
 from keras.wrappers.scikit_learn import KerasClassifier
@@ -189,7 +189,7 @@ def model_def(dropout_rate = 0.1):
 
   model.summary()
 
-  opt = Adam(learning_rate=0.001)
+  opt = keras.optimizers.Adam(learning_rate=0.001)
   model.compile(optimizer = opt , loss ='mean_squared_error' , metrics = ['accuracy'])
   return model
 
