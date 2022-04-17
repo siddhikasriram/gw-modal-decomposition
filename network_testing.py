@@ -134,8 +134,8 @@ def show_mode_output(y_test, y_test_pred, fname, heading):
   m_deviation = y_test[:, 0]-y_test_pred[:, 0]
   plt.xlim(xmin=-5, xmax = 5)
   plt.ylim([1,10**5])
-  counts, bins, _ = plt.hist(m_deviation, edgecolor="white")
-  # bins=len(set(m_deviation)), 
+  #counts, bins, _ = plt.hist(m_deviation, edgecolor="white")
+  counts, bins, _ = plt.hist(n_deviation, bins=len(set(n_deviation)), edgecolor="white")
   for n, b in zip(counts, bins):
     plt.gca().text(b + 0.05, n, int(n), rotation = 45)  # +0.1 to center text
 
@@ -167,8 +167,8 @@ def show_mode_output(y_test, y_test_pred, fname, heading):
   n_deviation = y_test[:, 1]-y_test_pred[:, 1]
   plt.xlim(xmin=-5, xmax = 5)
   plt.ylim([1,10**5])
-  #counts, bins, _ = plt.hist(n_deviation, bins=len(set(n_deviation)), edgecolor="white")
-  counts, bins, _ = plt.hist(n_deviation, edgecolor = 'white')
+  counts, bins, _ = plt.hist(n_deviation, bins=len(set(n_deviation)), edgecolor="white")
+  #counts, bins, _ = plt.hist(n_deviation, edgecolor = 'white')
   for n, b in zip(counts, bins):
     plt.gca().text(b+0.05, n, int(n), rotation = 45)  # +0.1 to center text
 
@@ -459,7 +459,7 @@ if __name__ == '__main__':
   #Fetching the test data
   img_size = 128
   #pathName = 'C:/Users/siddh/Desktop/GW CNN/GW_input_data/1064 data/test/gw-modal-decomposition/dataset/rotated'
-  pathName = '/home/siddhika/dataset_rotated'
+  pathName = '/home/siddhika/dataset'
   testing = getdata(pathName)
   x_test = np.array(testing) / 255
   x_test.reshape(-1, img_size, img_size, 1)
