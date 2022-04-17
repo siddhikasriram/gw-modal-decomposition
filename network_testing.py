@@ -38,9 +38,9 @@ def labelling (fileName):
       labels.append(64 + int("-"+image[19:21]))
 
     if image[22] == 'p': # y-offset value
-      labels.append(64 + int("+"+image[23:25]))
-    else:
       labels.append(64 + int("-"+image[23:25]))
+    else:
+      labels.append(64 + int("+"+image[23:25]))
     
     labels.append(float(image[13:17])) # noise level
 
@@ -503,7 +503,7 @@ if __name__ == '__main__':
   for i, noise in enumerate(y_test[:, 4]):
     noiselist.append(noise)
   
-  main_op = 'norm_out.png'
+  main_op = 'rot_out.png'
   main_heading = 'Performance of the model for the entire test dataset'
   show_mode_output(y_test, y_test_pred, main_op, main_heading)
 
