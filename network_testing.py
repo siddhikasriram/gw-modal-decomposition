@@ -33,7 +33,7 @@ def labelling (fileName):
     labels.append(int(image[11])) # TEM n value
 
     if image[18] == 'p': # x-offset value
-      labels.append(64 + int(image[19:21]))
+      labels.append(64 + int("+"+image[19:21]))
     else:
       labels.append(64 + int("-"+image[19:21]))
 
@@ -459,7 +459,7 @@ if __name__ == '__main__':
   #Fetching the test data
   img_size = 128
   #pathName = 'C:/Users/siddh/Desktop/GW CNN/GW_input_data/1064 data/test/gw-modal-decomposition/dataset/rotated'
-  pathName = '/home/siddhika/dataset'
+  pathName = '/home/siddhika/dataset_rotated'
   testing = getdata(pathName)
   x_test = np.array(testing) / 255
   x_test.reshape(-1, img_size, img_size, 1)
@@ -503,7 +503,7 @@ if __name__ == '__main__':
   for i, noise in enumerate(y_test[:, 4]):
     noiselist.append(noise)
   
-  main_op = 'rot_out.png'
+  main_op = 'normal_out.png'
   main_heading = 'Performance of the model for the entire test dataset'
   show_mode_output(y_test, y_test_pred, main_op, main_heading)
 
