@@ -134,8 +134,8 @@ def show_mode_output(y_test, y_test_pred, fname, heading):
   m_deviation = y_test[:, 0]-y_test_pred[:, 0]
   plt.xlim(xmin=-5, xmax = 5)
   plt.ylim([1,10**5])
-  #counts, bins, _ = plt.hist(m_deviation, edgecolor="white")
-  counts, bins, _ = plt.hist(m_deviation, bins=len(set(m_deviation)), edgecolor="white")
+  counts, bins, _ = plt.hist(m_deviation, edgecolor="white")
+  #counts, bins, _ = plt.hist(m_deviation, bins=len(set(m_deviation)), edgecolor="white")
   for n, b in zip(counts, bins):
     plt.gca().text(b + 0.05, n, int(n), rotation = 45)  # +0.1 to center text
 
@@ -167,8 +167,8 @@ def show_mode_output(y_test, y_test_pred, fname, heading):
   n_deviation = y_test[:, 1]-y_test_pred[:, 1]
   plt.xlim(xmin=-5, xmax = 5)
   plt.ylim([1,10**5])
-  counts, bins, _ = plt.hist(n_deviation, bins=len(set(n_deviation)), edgecolor="white")
-  #counts, bins, _ = plt.hist(n_deviation, edgecolor = 'white')
+  #counts, bins, _ = plt.hist(n_deviation, bins=len(set(n_deviation)), edgecolor="white")
+  counts, bins, _ = plt.hist(n_deviation, edgecolor = 'white')
   for n, b in zip(counts, bins):
     plt.gca().text(b+0.05, n, int(n), rotation = 45)  # +0.1 to center text
 
@@ -503,7 +503,7 @@ if __name__ == '__main__':
   for i, noise in enumerate(y_test[:, 4]):
     noiselist.append(noise)
   
-  main_op = 'n_out.png'
+  main_op = 'norm_out.png'
   main_heading = 'Performance of the model for the entire test dataset'
   show_mode_output(y_test, y_test_pred, main_op, main_heading)
 
