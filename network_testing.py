@@ -134,14 +134,15 @@ def show_mode_output(y_test, y_test_pred, fname, heading):
   m_deviation = y_test[:, 0]-y_test_pred[:, 0]
   plt.xlim(xmin=-5, xmax = 5)
   plt.ylim([1,10**5])
-  counts, bins, _ = plt.hist(m_deviation, bins=len(set(m_deviation)), edgecolor="white")
+  counts, bins, _ = plt.hist(m_deviation, edgecolor="white")
+  # bins=len(set(m_deviation)), 
   for n, b in zip(counts, bins):
     plt.gca().text(b + 0.05, n, int(n), rotation = 45)  # +0.1 to center text
 
   plt.subplot(3,2,3)
   plt.title('TEM n - Mean deviation for all mode combinations')
-  plt.xlabel('TEM m actual')
-  plt.ylabel('TEM n actual')
+  plt.ylabel('TEM m actual')
+  plt.xlabel('TEM n actual')
   cm = plt.cm.get_cmap('brg')
   actual = [tuple(x[:2]) for x in actual]
   c_list_n = []
@@ -153,7 +154,7 @@ def show_mode_output(y_test, y_test_pred, fname, heading):
       c_list_n.append(ndiff[z])
       
       print(y_test[:, 0][i], y_test[:, 1][i], ndiff[z])
-  sc = plt.scatter(y_test[:, 0], y_test[:, 1], c=c_list_n, cmap=cm)
+  sc = plt.scatter(y_test[:, 1], y_test[:, 0], c=c_list_n, cmap=cm)
   print("c_list_n", c_list_n)
   cbar2 = plt.colorbar(sc)
   cbar2.mappable.set_clim(vmin=-1,vmax=1)
@@ -166,7 +167,8 @@ def show_mode_output(y_test, y_test_pred, fname, heading):
   n_deviation = y_test[:, 1]-y_test_pred[:, 1]
   plt.xlim(xmin=-5, xmax = 5)
   plt.ylim([1,10**5])
-  counts, bins, _ = plt.hist(n_deviation, bins=len(set(n_deviation)), edgecolor="white")
+  #counts, bins, _ = plt.hist(n_deviation, bins=len(set(n_deviation)), edgecolor="white")
+  counts, bins, _ = plt.hist(n_deviation, edgecolor = 'white')
   for n, b in zip(counts, bins):
     plt.gca().text(b+0.05, n, int(n), rotation = 45)  # +0.1 to center text
 
@@ -190,7 +192,7 @@ def show_mode_output(y_test, y_test_pred, fname, heading):
     
   #catalog.close()
   plt.show()   
-  #plt.savefig(fname)
+  plt.savefig(fname)
 
 def show_offset_output(y_test, y_test_pred, fname, heading):
   #default size = 10
@@ -293,7 +295,7 @@ def show_offset_output(y_test, y_test_pred, fname, heading):
   y_deviation = y_test[:, 3]-y_test_pred[:, 3]
   plt.xlim(xmin=-5, xmax = 5)
   #plt.ylim([1,10**5])
-  counts, bins, _ = plt.hist(y_deviation, bins=len(set(y_deviation)), edgecolor="white")
+  counts, bins, _ = plt.hist(y_deviation, bins=len(set(y_deviation)))
   for n, b in zip(counts, bins):
     plt.gca().text(b+0.05, n, int(n), rotation = 45)  # +0.1 to center text
 
@@ -341,7 +343,7 @@ def show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred
   
   plt.hist([low_m_deviation,med_m_deviation, high_m_deviation],bins = len(set(high_m_deviation)), label=['0.05 - 0.3', '0.3 - 0.6', '0.6 - 0.9'])
   plt.legend(loc='upper right')
-
+  
   plt.subplot(2,1,2)
   plt.title('TEM n - Individual deviation from original value')
   plt.xlabel('n deviation for different noises')
@@ -449,12 +451,15 @@ if __name__ == '__main__':
 
   
   #Loading the saved model
-  model = keras.models.load_model('C:/Users/siddh/Desktop/GW CNN/GW_input_data/1064 data/test/gw-modal-decomposition/new_model.h5')
+  model = keras.models.load_model('/home/siddhika/gw-modal-decomposition/new_model.h5')
+  #model = keras.models.load_model('C:/Users/siddh/Desktop/GW CNN/GW_input_data/1064 data/test/gw-modal-decomposition/new_model.h5')
   #print(model.summary())
-
+  
+  
   #Fetching the test data
   img_size = 128
-  pathName = 'C:/Users/siddh/Desktop/GW CNN/GW_input_data/1064 data/test/gw-modal-decomposition/dataset/normal'
+  #pathName = 'C:/Users/siddh/Desktop/GW CNN/GW_input_data/1064 data/test/gw-modal-decomposition/dataset/rotated'
+  pathName = '/home/siddhika/dataset_rotated'
   testing = getdata(pathName)
   x_test = np.array(testing) / 255
   x_test.reshape(-1, img_size, img_size, 1)
@@ -478,8 +483,8 @@ if __name__ == '__main__':
   open_file2 = open(y_test_pkl, "rb")
   y_test_pred = pickle.load(open_file2)
   open_file2.close()
-
   '''
+  
   #print("ytest", y_test)
   #print("ypred", y_test_pred)
   
@@ -498,7 +503,7 @@ if __name__ == '__main__':
   for i, noise in enumerate(y_test[:, 4]):
     noiselist.append(noise)
   
-  main_op = '01out.png'
+  main_op = 'r_out.png'
   main_heading = 'Performance of the model for the entire test dataset'
   show_mode_output(y_test, y_test_pred, main_op, main_heading)
 
