@@ -209,7 +209,7 @@ def show_offset_output(y_test, y_test_pred, fname, heading):
   sample_size = len(y_test)
   actual = y_test.copy()
   predicted = y_test_pred.copy()
-  actual = [tuple(x[2:]) for x in actual] 
+  actual = [tuple(x[2:4]) for x in actual] 
   #print("actual", actual)
   predicted = [tuple(x[2:]) for x in predicted]
   #print("pridicted", predicted)
