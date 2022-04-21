@@ -461,7 +461,7 @@ if __name__ == '__main__':
   #Fetching the test data
   img_size = 128
   #pathName = 'C:/Users/siddh/Desktop/GW CNN/GW_input_data/1064 data/test/gw-modal-decomposition/dataset/normal'
-  pathName = '/home/siddhika/dataset'
+  pathName = '/home/siddhika/gw-modal-decomposition/Output/test'
   testing = getdata(pathName)
   x_test = np.array(testing) / 255
   x_test.reshape(-1, img_size, img_size, 1)
@@ -505,10 +505,10 @@ if __name__ == '__main__':
   for i, noise in enumerate(y_test[:, 4]):
     noiselist.append(noise)
   
-  main_op = 'offsetout.png'
+  main_op = 'offsetout1.png'
   main_heading = 'Performance of the model for the entire test dataset'
   #show_mode_output(y_test, y_test_pred, main_op, main_heading)
-  #show_offset_output(y_test, y_test_pred, main_op, main_heading)
+  show_offset_output(y_test, y_test_pred, main_op, main_heading)
 
   #Access perfromace based on noise levels - split to three ranges
   low_noise_act = []
@@ -541,21 +541,21 @@ if __name__ == '__main__':
   low_noise_act = np.array([np.array(x) for x in low_noise_act])
   low_noise_pred = np.array([np.array(x) for x in low_noise_pred])
   low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.1'
-  low_op = 'lowoffout.png'
+  low_op = 'lowoffout1.png'
   #show_mode_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
-  #show_offset_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
+  show_offset_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
 
   med_noise_act = np.array([np.array(x) for x in med_noise_act])
   med_noise_pred = np.array([np.array(x) for x in med_noise_pred])
   med_noise_heading = 'Performance of the model when the noise is between 0.3 and 0.6'
-  med_op = 'finalmedoff.png'
+  med_op = 'medoffout1.png'
   #show_mode_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
   show_offset_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
 
   high_noise_act = np.array([np.array(x) for x in high_noise_act])
   high_noise_pred = np.array([np.array(x) for x in high_noise_pred])
   high_noise_heading = 'Performance of the model when the noise is between 0.6 and 0.9'
-  high_op = 'finalhighoff.png'
+  high_op = 'highoffout1.png'
   #show_mode_output(high_noise_act, high_noise_pred, high_op, high_noise_heading)
   show_offset_output(high_noise_act, high_noise_pred, high_op, high_noise_heading)
 
