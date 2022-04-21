@@ -38,9 +38,9 @@ def labelling (fileName):
       labels.append(64 + int("-"+image[19:21]))
 
     if image[22] == 'p': # y-offset value
-      labels.append(64 + int("-"+image[23:25]))
-    else:
       labels.append(64 + int("+"+image[23:25]))
+    else:
+      labels.append(64 + int("-"+image[23:25]))
     
     labels.append(float(image[13:17])) # noise level
 
@@ -135,7 +135,7 @@ def show_mode_output(y_test, y_test_pred, fname, heading):
   plt.xlim(xmin=-5, xmax = 5)
   plt.ylim([1,10**5])
   counts, bins, _ = plt.hist(m_deviation, edgecolor="white")
-  #counts, bins, _ = plt.hist(m_deviation, bins=len(set(m_deviation)), edgecolor="white")
+  # bins=len(set(m_deviation)), 
   for n, b in zip(counts, bins):
     plt.gca().text(b + 0.05, n, int(n), rotation = 45)  # +0.1 to center text
 
@@ -258,7 +258,7 @@ def show_offset_output(y_test, y_test_pred, fname, heading):
   sc = plt.scatter(y_test[:, 2], y_test[:, 3], c=c_list_x, cmap = cm)
   #sc = plt.scatter(y_test[:, 0][i], y_test[:, 1][i], mdiff[z], cmap = cm) - indexing not allowed in v-3.7
   cbar1 = plt.colorbar(sc)
-  cbar1.mappable.set_clim(vmin=-4,vmax=4)
+  cbar1.mappable.set_clim(vmin=-5,vmax=5)
 
   plt.subplot(3,2,2)
   plt.title('Offset x - Individual deviation from original value')
@@ -266,16 +266,17 @@ def show_offset_output(y_test, y_test_pred, fname, heading):
   plt.ylabel('No. of Samples')
   plt.yscale('log')
   x_deviation = y_test[:, 2]-y_test_pred[:, 2]
-  plt.xlim(xmin=-5, xmax = 5)
-  #plt.ylim([1,10**5])
-  counts, bins, _ = plt.hist(x_deviation, bins=len(set(x_deviation)), edgecolor="white")
+  #plt.xlim(xmin=-5, xmax = 5)
+  plt.ylim([1,10**5])
+  counts, bins, _ = plt.hist(x_deviation, edgecolor="white")
+  # bins=len(set(x_deviation)), 
   for n, b in zip(counts, bins):
     plt.gca().text(b + 0.05, n, int(n), rotation = 45)  # +0.1 to center text
 
   plt.subplot(3,2,3)
   plt.title('Offset y - Mean deviation for all offset combinations')
-  plt.xlabel('X actual')
-  plt.ylabel('Y actual')
+  plt.xlabel('Y actual')
+  plt.ylabel('X actual')
   cm = plt.cm.get_cmap('brg')
   c_list_y = []
   for i, a in enumerate(y_test[:,3]):
@@ -283,9 +284,9 @@ def show_offset_output(y_test, y_test_pred, fname, heading):
     z = actual[i]
     if z in ydiff.keys():
       c_list_y.append(ydiff[z])
-  sc = plt.scatter(y_test[:, 2], y_test[:, 3], c=c_list_y, cmap=cm)
+  sc = plt.scatter(y_test[:, 3], y_test[:, 2], c=c_list_y, cmap=cm)
   cbar2 = plt.colorbar(sc)
-  cbar2.mappable.set_clim(vmin=-4,vmax=4)
+  cbar2.mappable.set_clim(vmin=-5,vmax=5)
 
   plt.subplot(3,2,4)
   plt.title('Offset y - Individual deviation from original value')
@@ -293,9 +294,10 @@ def show_offset_output(y_test, y_test_pred, fname, heading):
   plt.ylabel('No. of Samples')
   plt.yscale('log')
   y_deviation = y_test[:, 3]-y_test_pred[:, 3]
-  plt.xlim(xmin=-5, xmax = 5)
-  #plt.ylim([1,10**5])
-  counts, bins, _ = plt.hist(y_deviation, bins=len(set(y_deviation)))
+  #plt.xlim(xmin=-5, xmax = 5)
+  plt.ylim([1,10**5])
+  counts, bins, _ = plt.hist(y_deviation, edgecolor = 'white')
+  # bins=len(set(y_deviation)), 
   for n, b in zip(counts, bins):
     plt.gca().text(b+0.05, n, int(n), rotation = 45)  # +0.1 to center text
 
@@ -319,7 +321,7 @@ def show_offset_output(y_test, y_test_pred, fname, heading):
     
   #catalog.close()
   plt.show()   
-  #plt.savefig(fname)
+  plt.savefig(fname)
 
 
 
@@ -451,15 +453,15 @@ if __name__ == '__main__':
 
   
   #Loading the saved model
-  model = keras.models.load_model('/home/siddhika/gw-modal-decomposition/new_model.h5')
   #model = keras.models.load_model('C:/Users/siddh/Desktop/GW CNN/GW_input_data/1064 data/test/gw-modal-decomposition/new_model.h5')
+  model = keras.models.load_model('/home/siddhika/gw-modal-decomposition/new_model.h5')
   #print(model.summary())
   
   
   #Fetching the test data
   img_size = 128
-  #pathName = 'C:/Users/siddh/Desktop/GW CNN/GW_input_data/1064 data/test/gw-modal-decomposition/dataset/rotated'
-  pathName = '/home/siddhika/dataset_rotated'
+  #pathName = 'C:/Users/siddh/Desktop/GW CNN/GW_input_data/1064 data/test/gw-modal-decomposition/dataset/normal'
+  pathName = '/home/siddhika/dataset'
   testing = getdata(pathName)
   x_test = np.array(testing) / 255
   x_test.reshape(-1, img_size, img_size, 1)
@@ -503,9 +505,10 @@ if __name__ == '__main__':
   for i, noise in enumerate(y_test[:, 4]):
     noiselist.append(noise)
   
-  main_op = 'normal_out.png'
+  main_op = 'modeout.png'
   main_heading = 'Performance of the model for the entire test dataset'
   show_mode_output(y_test, y_test_pred, main_op, main_heading)
+  #show_offset_output(y_test, y_test_pred, main_op, main_heading)
 
   #Access perfromace based on noise levels - split to three ranges
   low_noise_act = []
@@ -538,21 +541,23 @@ if __name__ == '__main__':
   low_noise_act = np.array([np.array(x) for x in low_noise_act])
   low_noise_pred = np.array([np.array(x) for x in low_noise_pred])
   low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.1'
-  low_op = '01lowout.png'
-  #show_mode_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
+  low_op = 'lownoiseout.png'
+  show_mode_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
   #show_offset_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
 
   med_noise_act = np.array([np.array(x) for x in med_noise_act])
   med_noise_pred = np.array([np.array(x) for x in med_noise_pred])
   med_noise_heading = 'Performance of the model when the noise is between 0.3 and 0.6'
-  med_op = '5medout.png'
-  #show_mode_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
+  med_op = 'mednoiseout.png'
+  show_mode_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
+  #show_offset_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
 
   high_noise_act = np.array([np.array(x) for x in high_noise_act])
   high_noise_pred = np.array([np.array(x) for x in high_noise_pred])
   high_noise_heading = 'Performance of the model when the noise is between 0.6 and 0.9'
-  high_op = '5highout.png'
-  #show_mode_output(high_noise_act, high_noise_pred, high_op, high_noise_heading)
+  high_op = 'highnoiseout.png'
+  show_mode_output(high_noise_act, high_noise_pred, high_op, high_noise_heading)
+  #show_offset_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
 
   #combined plot
   noise_op = '3noisyplot.png'
