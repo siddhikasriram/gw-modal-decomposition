@@ -505,10 +505,10 @@ if __name__ == '__main__':
   for i, noise in enumerate(y_test[:, 4]):
     noiselist.append(noise)
   
-  main_op = 'modeout.png'
+  main_op = 'offsetout.png'
   main_heading = 'Performance of the model for the entire test dataset'
-  show_mode_output(y_test, y_test_pred, main_op, main_heading)
-  #show_offset_output(y_test, y_test_pred, main_op, main_heading)
+  #show_mode_output(y_test, y_test_pred, main_op, main_heading)
+  show_offset_output(y_test, y_test_pred, main_op, main_heading)
 
   #Access perfromace based on noise levels - split to three ranges
   low_noise_act = []
@@ -541,23 +541,23 @@ if __name__ == '__main__':
   low_noise_act = np.array([np.array(x) for x in low_noise_act])
   low_noise_pred = np.array([np.array(x) for x in low_noise_pred])
   low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.1'
-  low_op = 'lownoiseout.png'
-  show_mode_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
-  #show_offset_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
+  low_op = 'lowoffout.png'
+  #show_mode_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
+  show_offset_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
 
   med_noise_act = np.array([np.array(x) for x in med_noise_act])
   med_noise_pred = np.array([np.array(x) for x in med_noise_pred])
   med_noise_heading = 'Performance of the model when the noise is between 0.3 and 0.6'
-  med_op = 'mednoiseout.png'
-  show_mode_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
-  #show_offset_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
+  med_op = 'medoffout.png'
+  #show_mode_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
+  show_offset_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
 
   high_noise_act = np.array([np.array(x) for x in high_noise_act])
   high_noise_pred = np.array([np.array(x) for x in high_noise_pred])
   high_noise_heading = 'Performance of the model when the noise is between 0.6 and 0.9'
-  high_op = 'highnoiseout.png'
-  show_mode_output(high_noise_act, high_noise_pred, high_op, high_noise_heading)
-  #show_offset_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
+  high_op = 'highoffout.png'
+  #show_mode_output(high_noise_act, high_noise_pred, high_op, high_noise_heading)
+  show_offset_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
 
   #combined plot
   noise_op = '3noisyplot.png'
