@@ -540,7 +540,7 @@ if __name__ == '__main__':
 
   low_noise_act = np.array([np.array(x) for x in low_noise_act])
   low_noise_pred = np.array([np.array(x) for x in low_noise_pred])
-  low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.1'
+  low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.3'
   low_op = 'lowoffset2.png'
   #show_mode_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
   show_offset_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
