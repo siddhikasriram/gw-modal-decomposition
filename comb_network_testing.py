@@ -292,7 +292,7 @@ def show_mode_output(y_test, y_test_pred, fname, heading):
     
   #catalog.close()
   plt.show()   
-  plt.savefig(f'{fname}-mode')
+  plt.savefig(fname)
 
 def show_offset_output(y_test, y_test_pred, fname, heading):
   #default size = 10
@@ -384,7 +384,7 @@ def show_offset_output(y_test, y_test_pred, fname, heading):
     z = actual[i]
     if z in ydiff.keys():
       c_list_y.append(ydiff[z])
-  sc = plt.scatter(y_test[:, 5], y_test[:, 4], c=c_list_y, cmap=cm)
+  sc = plt.scatter(y_test[:, 5], y_test[:, 4], s=5, c=c_list_y, cmap=cm)
   cbar2 = plt.colorbar(sc)
   cbar2.mappable.set_clim(vmin=-5,vmax=5)
 
@@ -421,7 +421,7 @@ def show_offset_output(y_test, y_test_pred, fname, heading):
     
   #catalog.close()
   plt.show()   
-  plt.savefig(f'{fname}-off')
+  plt.savefig(fname)
 
 
 
@@ -462,7 +462,7 @@ def show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred
   plt.legend(loc='upper right')
 
   plt.show()
-  plt.savefig(fname)
+  #plt.savefig(fname)
 
 def show_noisy_imgs(data_path, fname):
 
@@ -549,21 +549,21 @@ def show_noisy_imgs(data_path, fname):
           axes[i,j].set_title(f'{l[img_count][1]}\n Predicted: {y_test_pred[img_count,0]}, {y_test_pred[img_count, 1]}, {y_test_pred[img_count, 2]}, {y_test_pred[img_count, 3]}')
           img_count+=1
     #plt.show()  
-    plt.savefig(f'{fname}{_}')
+    plt.savefig(fname)
 
 if __name__ == '__main__':
 
   
   #Loading the saved model
   #model = keras.models.load_model('C:/Users/siddh/Desktop/GW CNN/GW_input_data/1064 data/test/gw-modal-decomposition/comb_new_model.h5')
-  model = keras.models.load_model('/home/siddhika/gw-modal-decomposition/comb_new_model.h5')
+  model = keras.models.load_model('/home/siddhika/gw-modal-decomposition/new_model_comb.h5')
   #print(model.summary())
   
   
   #Fetching the test data
   img_size = 128
   #pathName = 'C:/Users/siddh/Desktop/GW CNN/GW_input_data/1064 data/test/gw-modal-decomposition/dataset/normal'
-  pathName = '/home/siddhika/dataset_comb'
+  pathName = '/home/siddhika/gw-modal-decomposition/Output/c_test'
   testing = getdata(pathName)
   x_test = np.array(testing) / 255
   x_test.reshape(-1, img_size, img_size, 1)
@@ -581,17 +581,25 @@ if __name__ == '__main__':
   y_test = pickle.load(open_file1)
   open_file1.close()
   #print(y_test)
-
+ 
+  with open('comb_y_test.pkl', "wb") as f:
+    pickle.dump(y_test, f)
+    #print(y_test)
+  
   #y_test_pred is rounded | y_test_pred1 is not rounded
   y_test_pkl = 'C:/Users/siddh/Desktop/GW CNN/GW_input_data/1064 data/test/gw-modal-decomposition/y_test_pred.pkl'
   open_file2 = open(y_test_pkl, "rb")
   y_test_pred = pickle.load(open_file2)
   open_file2.close()
-  '''
   
+  
+  with open('comb_y_test_pred.pkl', "wb") as q:
+    pickle.dump(y_test_pred, q)
+  #print(y_test)
+
   #print("ytest", y_test)
   #print("ypred", y_test_pred)
-  
+  ''' 
 
   # Rounding off as modes are integers
   # y_test_pred[:,0] = [round(x, 2) for x in y_test_pred[:,0]]
@@ -607,10 +615,11 @@ if __name__ == '__main__':
   for i, noise in enumerate(y_test[:, 4]):
     noiselist.append(noise)
   
-  main_op = 'combout.png'
+  main_mode_op = 'combmode_oldmodel.png'
+  main_off_op = 'comboffnew.png'
   main_heading = 'Performance of the model for the entire test dataset'
-  show_mode_output(y_test, y_test_pred, main_op, main_heading)
-  show_offset_output(y_test, y_test_pred, main_op, main_heading)
+  #show_mode_output(y_test, y_test_pred, main_mode_op, main_heading)
+  show_offset_output(y_test, y_test_pred, main_off_op, main_heading)
 
   #Access perfromace based on noise levels - split to three ranges
   low_noise_act = []
