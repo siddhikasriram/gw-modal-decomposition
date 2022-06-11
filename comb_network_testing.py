@@ -46,7 +46,8 @@ def labelling (fileName):
       labels.append(64 + int("+"+image[27:29]))
     else:
       labels.append(64 + int("-"+image[27:29]))
-
+      
+    labels.append(float(image[17:21])) # noise level
     yParam.append(labels)
   yParam = np.array([np.array(x) for x in yParam])
   return yParam
@@ -635,18 +636,18 @@ if __name__ == '__main__':
 
   for ind, act in enumerate(y_test):
     pred = y_test_pred[ind]
-    noise = y_test[ind,4]
+    noise = y_test[ind,6]
     if noise >= 0.05 and noise <= 0.3:
-      low_noise_act.append(y_test[ind,0:4])
-      low_noise_pred.append(y_test_pred[ind, 0:4])
+      low_noise_act.append(y_test[ind,0:6])
+      low_noise_pred.append(y_test_pred[ind, 0:6])
       lownoiselist.append(noise)
     elif noise > 0.3 and noise <=0.6:
-      med_noise_act.append(y_test[ind,0:4])
-      med_noise_pred.append(y_test_pred[ind, 0:4])
+      med_noise_act.append(y_test[ind,0:6])
+      med_noise_pred.append(y_test_pred[ind, 0:6])
       mednoiselist.append(noise)
     else:
-      high_noise_act.append(y_test[ind,0:4])
-      high_noise_pred.append(y_test_pred[ind, 0:4])
+      high_noise_act.append(y_test[ind,0:6])
+      high_noise_pred.append(y_test_pred[ind, 0:6])
       highnoiselist.append(noise)  
 
   low_noise_act = np.array([np.array(x) for x in low_noise_act])
