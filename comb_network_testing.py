@@ -195,7 +195,7 @@ def show_mode_output(y_test, y_test_pred, fname, heading):
     plt.gca().text(b+0.05, n, int(n), rotation = 45)  # +0.1 to center text
 
   plt.subplot(4,3,7)
-  plt.title('Set 1 TEM m - Mean deviation for all mode combinations')
+  plt.title('Set 2 TEM m - Mean deviation for all mode combinations')
   plt.xlabel('TEM m actual')
   plt.ylabel('TEM n actual')
   cm = plt.cm.get_cmap('brg')
@@ -240,7 +240,7 @@ def show_mode_output(y_test, y_test_pred, fname, heading):
     if z in ndiff2.keys():
       c_list_n.append(ndiff2[z])
     
-  sc = plt.scatter(y_test[:, 2], y_test[:, 3], c=c_list_n, cmap=cm)
+  sc = plt.scatter(y_test[:, 3], y_test[:, 2], c=c_list_n, cmap=cm)
   print("c_list_n", c_list_n)
   cbar2 = plt.colorbar(sc)
   cbar2.mappable.set_clim(vmin=-1,vmax=1)
@@ -615,10 +615,10 @@ if __name__ == '__main__':
   for i, noise in enumerate(y_test[:, 4]):
     noiselist.append(noise)
   
-  main_mode_op = 'combmode_oldmodel.png'
-  main_off_op = 'comboffnew.png'
+  main_mode_op = '1.png'
+  main_off_op = '2.png'
   main_heading = 'Performance of the model for the entire test dataset'
-  #show_mode_output(y_test, y_test_pred, main_mode_op, main_heading)
+  show_mode_output(y_test, y_test_pred, main_mode_op, main_heading)
   show_offset_output(y_test, y_test_pred, main_off_op, main_heading)
 
   #Access perfromace based on noise levels - split to three ranges
@@ -652,21 +652,26 @@ if __name__ == '__main__':
   low_noise_act = np.array([np.array(x) for x in low_noise_act])
   low_noise_pred = np.array([np.array(x) for x in low_noise_pred])
   low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.1'
-  low_op = '01lowout.png'
-  #show_mode_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
-  #show_offset_output(low_noise_act, low_noise_pred, low_op, low_noise_heading)
+  low_op_mode = '3.png'
+  low_op_off = '4.png'
+  show_mode_output(low_noise_act, low_noise_pred, low_op_mode, low_noise_heading)
+  show_offset_output(low_noise_act, low_noise_pred, low_op_off, low_noise_heading)
 
   med_noise_act = np.array([np.array(x) for x in med_noise_act])
   med_noise_pred = np.array([np.array(x) for x in med_noise_pred])
   med_noise_heading = 'Performance of the model when the noise is between 0.3 and 0.6'
-  med_op = '5medout.png'
-  #show_mode_output(med_noise_act, med_noise_pred, med_op, med_noise_heading)
+  med_op_mode = '5.png'
+  med_op_off = '6.png'
+  show_mode_output(med_noise_act, med_noise_pred, med_op_mode, med_noise_heading)
+  show_mode_output(med_noise_act, med_noise_pred, med_op_mode, med_noise_heading)
 
   high_noise_act = np.array([np.array(x) for x in high_noise_act])
   high_noise_pred = np.array([np.array(x) for x in high_noise_pred])
   high_noise_heading = 'Performance of the model when the noise is between 0.6 and 0.9'
-  high_op = '5highout.png'
-  #show_mode_output(high_noise_act, high_noise_pred, high_op, high_noise_heading)
+  high_op_mode = '7.png'
+  high_op_off = '8.png'
+  show_mode_output(high_noise_act, high_noise_pred, high_op_mode, high_noise_heading)
+  show_mode_output(high_noise_act, high_noise_pred, high_op_off, high_noise_heading)
 
   #combined plot
   noise_op = '3noisyplot.png'
