@@ -664,7 +664,7 @@ if __name__ == '__main__':
   med_op_mode = '5.png'
   med_op_off = '6.png'
   #show_mode_output(med_noise_act, med_noise_pred, med_op_mode, med_noise_heading)
-  show_offset_output(med_noise_act, med_noise_pred, med_op_mode, med_noise_heading)
+  show_offset_output(med_noise_act, med_noise_pred, med_op_off, med_noise_heading)
 
   high_noise_act = np.array([np.array(x) for x in high_noise_act])
   high_noise_pred = np.array([np.array(x) for x in high_noise_pred])
