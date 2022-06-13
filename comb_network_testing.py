@@ -367,7 +367,7 @@ def show_offset_output(y_test, y_test_pred, fname, heading):
   plt.ylabel('No. of Samples')
   plt.yscale('log')
   x_deviation = y_test[:, 4]-y_test_pred[:, 4]
-  #plt.xlim(xmin=-5, xmax = 5)
+  plt.xlim(xmin=-15, xmax = 15)
   plt.ylim([1,10**5])
   counts, bins, _ = plt.hist(x_deviation, edgecolor="white")
   # bins=len(set(x_deviation)), 
@@ -395,7 +395,7 @@ def show_offset_output(y_test, y_test_pred, fname, heading):
   plt.ylabel('No. of Samples')
   plt.yscale('log')
   y_deviation = y_test[:, 5]-y_test_pred[:, 5]
-  #plt.xlim(xmin=-5, xmax = 5)
+  plt.xlim(xmin=-15, xmax = 15)
   plt.ylim([1,10**5])
   counts, bins, _ = plt.hist(y_deviation, edgecolor = 'white')
   # bins=len(set(y_deviation)), 
@@ -654,15 +654,15 @@ if __name__ == '__main__':
   low_noise_pred = np.array([np.array(x) for x in low_noise_pred])
   low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.1'
   low_op_mode = '3.png'
-  low_op_off = '9.png'
+  low_op_off = '12.png'
   #show_mode_output(low_noise_act, low_noise_pred, low_op_mode, low_noise_heading)
-  #show_offset_output(low_noise_act, low_noise_pred, low_op_off, low_noise_heading)
+  show_offset_output(low_noise_act, low_noise_pred, low_op_off, low_noise_heading)
 
   med_noise_act = np.array([np.array(x) for x in med_noise_act])
   med_noise_pred = np.array([np.array(x) for x in med_noise_pred])
   med_noise_heading = 'Performance of the model when the noise is between 0.3 and 0.6'
   med_op_mode = '5.png'
-  med_op_off = '10.png'
+  med_op_off = '13.png'
   #show_mode_output(med_noise_act, med_noise_pred, med_op_mode, med_noise_heading)
   show_offset_output(med_noise_act, med_noise_pred, med_op_off, med_noise_heading)
 
@@ -670,7 +670,7 @@ if __name__ == '__main__':
   high_noise_pred = np.array([np.array(x) for x in high_noise_pred])
   high_noise_heading = 'Performance of the model when the noise is between 0.6 and 0.9'
   high_op_mode = '7.png'
-  high_op_off = '11.png'
+  high_op_off = '14.png'
   #show_mode_output(high_noise_act, high_noise_pred, high_op_mode, high_noise_heading)
   show_offset_output(high_noise_act, high_noise_pred, high_op_off, high_noise_heading)
 
