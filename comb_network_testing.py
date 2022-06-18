@@ -368,7 +368,7 @@ def show_two_modes_output(y_test, y_test_pred, fname, heading):
 
   #print("mdiff after mean ", mdiff)
   #print(f"{heading} ndiff after mean", ndiff1)
-  plt.figure(figsize=(26,40)) # verticle rectangle sheet for 3 x 2 subplots
+  plt.figure(figsize=(30,30)) # verticle rectangle sheet for 3 x 2 subplots
   plt.suptitle(f'{heading} with {sample_size} samples')
 
   plt.subplot(2,2,1)
@@ -395,7 +395,7 @@ def show_two_modes_output(y_test, y_test_pred, fname, heading):
   plt.ylabel('No. of Samples')
   plt.yscale('log')
   m_deviation = y_test_pred[:, 0]-y_test_pred[:, 2]
-  #plt.xlim(xmin=-5, xmax = 5)
+  plt.xlim(xmin=-2, xmax = 2)
   plt.ylim([1,10**5])
   counts, bins, _ = plt.hist(m_deviation, edgecolor="white")
   # bins=len(set(m_deviation)), 
@@ -429,7 +429,7 @@ def show_two_modes_output(y_test, y_test_pred, fname, heading):
   plt.ylabel('No. of Samples')
   plt.yscale('log')
   n_deviation = y_test_pred[:, 1]-y_test_pred[:, 3]
-  plt.xlim(xmin=-5, xmax = 5)
+  plt.xlim(xmin=-2, xmax = 2)
   plt.ylim([1,10**5])
   #counts, bins, _ = plt.hist(n_deviation, bins=len(set(n_deviation)), edgecolor="white")
   counts, bins, _ = plt.hist(n_deviation, edgecolor = 'white')
@@ -762,7 +762,7 @@ if __name__ == '__main__':
   
   main_mode_op = '1.png'
   main_off_op = '2.png'
-  main_two_mode_op = '01.png'
+  main_two_mode_op = '001.png'
   main_heading = 'Performance of the model for the entire test dataset'
   #show_mode_output(y_test, y_test_pred, main_mode_op, main_heading)
   #show_offset_output(y_test, y_test_pred, main_off_op, main_heading)
@@ -801,7 +801,7 @@ if __name__ == '__main__':
   low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.3'
   low_op_mode = '3.png'
   low_op_off = '12.png'
-  low_two_mode_op = '02.png'
+  low_two_mode_op = '002.png'
   #show_mode_output(low_noise_act, low_noise_pred, low_op_mode, low_noise_heading)
   #show_offset_output(low_noise_act, low_noise_pred, low_op_off, low_noise_heading)
   show_two_modes_output(y_test, y_test_pred, low_two_mode_op, low_noise_heading)
@@ -812,7 +812,7 @@ if __name__ == '__main__':
   med_noise_heading = 'Performance of the model when the noise is between 0.3 and 0.6'
   med_op_mode = '5.png'
   med_op_off = '13.png'
-  med_two_mode_op = '03.png'
+  med_two_mode_op = '003.png'
   #show_mode_output(med_noise_act, med_noise_pred, med_op_mode, med_noise_heading)
   #show_offset_output(med_noise_act, med_noise_pred, med_op_off, med_noise_heading)
   show_two_modes_output(y_test, y_test_pred, med_two_mode_op, med_noise_heading)
@@ -823,7 +823,7 @@ if __name__ == '__main__':
   high_noise_heading = 'Performance of the model when the noise is between 0.6 and 0.9'
   high_op_mode = '7.png'
   high_op_off = '14.png'
-  high_two_mode_op = '04.png'
+  high_two_mode_op = '004.png'
   #show_mode_output(high_noise_act, high_noise_pred, high_op_mode, high_noise_heading)
   #show_offset_output(high_noise_act, high_noise_pred, high_op_off, high_noise_heading)
   show_two_modes_output(y_test, y_test_pred, high_two_mode_op, high_noise_heading)
