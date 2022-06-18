@@ -804,7 +804,7 @@ if __name__ == '__main__':
   low_two_mode_op = '02.png'
   #show_mode_output(low_noise_act, low_noise_pred, low_op_mode, low_noise_heading)
   #show_offset_output(low_noise_act, low_noise_pred, low_op_off, low_noise_heading)
-  show_two_modes_output(y_test, y_test_pred, main_two_mode_op, low_noise_heading)
+  show_two_modes_output(y_test, y_test_pred, low_two_mode_op, low_noise_heading)
   
 
   med_noise_act = np.array([np.array(x) for x in med_noise_act])
