@@ -147,8 +147,6 @@ def show_mode_output(y_test, y_test_pred, fname, heading):
   cbar1 = plt.colorbar(sc)
   cbar1.mappable.set_clim(vmin=-1,vmax=1)
 
-  
-
   plt.subplot(4,3,2)
   plt.title('TEM m - Individual deviation from original value')
   plt.xlabel('m deviation')
@@ -295,6 +293,152 @@ def show_mode_output(y_test, y_test_pred, fname, heading):
   plt.show()   
   plt.savefig(fname)
 
+
+def show_two_modes_output(y_test, y_test_pred, fname, heading):
+
+  #default size = 10
+  params = {'axes.labelsize': 14, #Fontsize of the x and y labels
+        'axes.titlesize': 15, #Fontsize of the axes title
+        'figure.titlesize': 18, #Size of the figure title (.suptitle())
+        'xtick.labelsize': 12, #Fontsize of the tick labels
+        'ytick.labelsize': 12,
+        'legend.fontsize': 12} #Fontsize for legends (plt.legend()
+
+  plt.rcParams.update(params) 
+
+  #print("n actual", y_test[:,1])
+  #print("n pred", y_test_pred[:,1])
+
+  #catalog = open(f'results_{fname}.txt', 'w')
+  sample_size = len(y_test)
+  actual = y_test.copy()
+  predicted = y_test_pred.copy()
+  actual = [tuple(x[:4]) for x in actual] 
+  predicted = [tuple(x[:4]) for x in predicted]
+
+  #print("actual combos of m and n ", actual)
+  
+  
+  mdiff=[]
+  ndiff=[]
+  print("actual:", actual)
+  print("predicted:", predicted)
+  for ind, act in enumerate(actual):
+    pred = predicted[ind]
+    # print("act:", act)
+    # print("pred:", pred)
+    z = pred[0] - pred[2] # z axis i.e, the colorbar
+    q = pred[1] - pred[3] 
+    mdiff.append(z)
+    ndiff.append(q)
+  print(mdiff)
+  print(ndiff)
+  
+  #l = [diff[i][1] for i in range(0,len(diff))]
+  #print("n difference:", l)
+  actual_m_keys = [tuple (i[0::2]) for i in actual] # (m, n) keys for dictionary
+  actual_n_keys = [tuple (i[1::2]) for i in actual]
+  #print("actual_keys - same as actual", actual_keys)
+  dmdiff = {}
+  dndiff = {}
+  
+  for x in actual_m_keys: # to create list and append to it later
+    dmdiff[x]=[]
+  for x in actual_n_keys:
+    dndiff[x]=[]
+  
+      
+  for i, x in enumerate(actual_m_keys):
+    if x in dmdiff.keys():
+      dmdiff[x].append(mdiff[i])
+  
+  for i, x in enumerate(actual_n_keys):
+    if x in dndiff.keys():
+      dndiff[x].append(ndiff[i])
+ 
+
+  #print("before mean m", mdiff)
+  #print("before mean n", ndiff)
+  # finding mean for each (m, n) combo for plotting colectively
+  for k, v in dmdiff.items():
+    dmdiff[k]=mean(v) 
+  for k, v in dndiff.items():
+    dndiff[k]=mean(v)
+
+
+  #print("mdiff after mean ", mdiff)
+  #print(f"{heading} ndiff after mean", ndiff1)
+  plt.figure(figsize=(26,40)) # verticle rectangle sheet for 3 x 2 subplots
+  plt.suptitle(f'{heading} with {sample_size} samples')
+
+  plt.subplot(2,2,1)
+  plt.title('TEM m1 & m2 - Mean difference for m combinations')
+  plt.xlabel('TEM m1 actual')
+  plt.ylabel('TEM m2 actual')
+  cm = plt.cm.get_cmap('brg')
+  c_list_m = [] # list has to be passed for python version 3.7
+
+  for i in range(0, len(actual)):
+    z = actual_m_keys[i]
+    if z in dmdiff.keys():
+      c_list_m.append(dmdiff[z])
+  sc = plt.scatter(y_test[:, 0], y_test[:, 2], c=c_list_m, cmap = cm)
+  #sc = plt.scatter(y_test[:, 0][i], y_test[:, 1][i], mdiff[z], cmap = cm) - indexing not allowed in v-3.7
+  cbar1 = plt.colorbar(sc)
+  #cbar1.mappable.set_clim(vmin=-1,vmax=1)
+
+  
+
+  plt.subplot(2,2,2)
+  plt.title('TEM m1 - m2 - Individual deviation from original value')
+  plt.xlabel('m1 - m2 deviation')
+  plt.ylabel('No. of Samples')
+  plt.yscale('log')
+  m_deviation = y_test_pred[:, 0]-y_test_pred[:, 2]
+  #plt.xlim(xmin=-5, xmax = 5)
+  plt.ylim([1,10**5])
+  counts, bins, _ = plt.hist(m_deviation, edgecolor="white")
+  # bins=len(set(m_deviation)), 
+  for n, b in zip(counts, bins):
+    plt.gca().text(b + 0.05, n, int(n), rotation = 45)  # +0.1 to center text
+
+  plt.subplot(2,2,3)
+  plt.title('TEM n1 & n2 - Mean difference for n combinations')
+  plt.xlabel('TEM n1 actual')
+  plt.ylabel('TEM n2 actual')
+  cm = plt.cm.get_cmap('brg')
+  actual = [tuple(x[:4]) for x in actual]
+  c_list_n = []
+
+  for i in range(0, len(actual)):
+    z = actual_n_keys[i]
+    #print(z)
+    if z in dndiff.keys():
+      c_list_n.append(dndiff[z])
+      
+      #print(y_test[:, 0][i], y_test[:, 1][i], ndiff1[z])
+  sc = plt.scatter(y_test[:, 1], y_test[:, 3], c=c_list_n, cmap=cm)
+  print("c_list_n", c_list_n)
+  cbar2 = plt.colorbar(sc)
+  cbar2.mappable.set_clim(vmin=-1,vmax=1)
+  
+  
+  plt.subplot(2,2,4)
+  plt.title('TEM n1 - n2 - Individual deviation from original value')
+  plt.xlabel('n1 - n2 deviation')
+  plt.ylabel('No. of Samples')
+  plt.yscale('log')
+  n_deviation = y_test_pred[:, 1]-y_test_pred[:, 3]
+  plt.xlim(xmin=-5, xmax = 5)
+  plt.ylim([1,10**5])
+  #counts, bins, _ = plt.hist(n_deviation, bins=len(set(n_deviation)), edgecolor="white")
+  counts, bins, _ = plt.hist(n_deviation, edgecolor = 'white')
+  for n, b in zip(counts, bins):
+    plt.gca().text(b+0.05, n, int(n), rotation = 45)  # +0.1 to center text
+    
+  plt.show()
+  ply.savefig(fname)
+  
 def show_offset_output(y_test, y_test_pred, fname, heading):
   #default size = 10
   params = {'axes.labelsize': 14, #Fontsize of the x and y labels
@@ -618,9 +762,11 @@ if __name__ == '__main__':
   
   main_mode_op = '1.png'
   main_off_op = '2.png'
+  main_two_mode_op = '01.png'
   main_heading = 'Performance of the model for the entire test dataset'
   #show_mode_output(y_test, y_test_pred, main_mode_op, main_heading)
   #show_offset_output(y_test, y_test_pred, main_off_op, main_heading)
+  show_two_modes_output(y_test, y_test_pred, main_two_mode_op, main_heading)
 
   #Access perfromace based on noise levels - split to three ranges
   low_noise_act = []
@@ -652,28 +798,36 @@ if __name__ == '__main__':
 
   low_noise_act = np.array([np.array(x) for x in low_noise_act])
   low_noise_pred = np.array([np.array(x) for x in low_noise_pred])
-  low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.1'
+  low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.3'
   low_op_mode = '3.png'
   low_op_off = '12.png'
+  low_two_mode_op = '02.png'
   #show_mode_output(low_noise_act, low_noise_pred, low_op_mode, low_noise_heading)
-  show_offset_output(low_noise_act, low_noise_pred, low_op_off, low_noise_heading)
+  #show_offset_output(low_noise_act, low_noise_pred, low_op_off, low_noise_heading)
+  show_two_modes_output(y_test, y_test_pred, main_two_mode_op, low_noise_heading)
+  
 
   med_noise_act = np.array([np.array(x) for x in med_noise_act])
   med_noise_pred = np.array([np.array(x) for x in med_noise_pred])
   med_noise_heading = 'Performance of the model when the noise is between 0.3 and 0.6'
   med_op_mode = '5.png'
   med_op_off = '13.png'
+  med_two_mode_op = '03.png'
   #show_mode_output(med_noise_act, med_noise_pred, med_op_mode, med_noise_heading)
-  show_offset_output(med_noise_act, med_noise_pred, med_op_off, med_noise_heading)
+  #show_offset_output(med_noise_act, med_noise_pred, med_op_off, med_noise_heading)
+  show_two_modes_output(y_test, y_test_pred, med_two_mode_op, med_noise_heading)
+  
 
   high_noise_act = np.array([np.array(x) for x in high_noise_act])
   high_noise_pred = np.array([np.array(x) for x in high_noise_pred])
   high_noise_heading = 'Performance of the model when the noise is between 0.6 and 0.9'
   high_op_mode = '7.png'
   high_op_off = '14.png'
+  high_two_mode_op = '04.png'
   #show_mode_output(high_noise_act, high_noise_pred, high_op_mode, high_noise_heading)
-  show_offset_output(high_noise_act, high_noise_pred, high_op_off, high_noise_heading)
-
+  #show_offset_output(high_noise_act, high_noise_pred, high_op_off, high_noise_heading)
+  show_two_modes_output(y_test, y_test_pred, high_two_mode_op, high_noise_heading)
+  
   #combined plot
   noise_op = '3noisyplot.png'
   #show_noise_plot(low_noise_act, low_noise_pred, med_noise_act, med_noise_pred, high_noise_act, high_noise_pred, noise_op)
