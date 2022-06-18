@@ -437,7 +437,7 @@ def show_two_modes_output(y_test, y_test_pred, fname, heading):
     plt.gca().text(b+0.05, n, int(n), rotation = 45)  # +0.1 to center text
     
   plt.show()
-  ply.savefig(fname)
+  plt.savefig(fname)
   
 def show_offset_output(y_test, y_test_pred, fname, heading):
   #default size = 10
