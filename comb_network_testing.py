@@ -395,7 +395,7 @@ def show_two_modes_output(y_test, y_test_pred, fname, heading):
   plt.ylabel('No. of Samples')
   plt.yscale('log')
   m_deviation = y_test_pred[:, 0]-y_test_pred[:, 2]
-  plt.xlim(xmin=-2, xmax = 2)
+  plt.xlim(xmin=-0.5, xmax = 0.5)
   plt.ylim([1,10**5])
   counts, bins, _ = plt.hist(m_deviation, edgecolor="white")
   # bins=len(set(m_deviation)), 
@@ -429,7 +429,7 @@ def show_two_modes_output(y_test, y_test_pred, fname, heading):
   plt.ylabel('No. of Samples')
   plt.yscale('log')
   n_deviation = y_test_pred[:, 1]-y_test_pred[:, 3]
-  plt.xlim(xmin=-2, xmax = 2)
+  plt.xlim(xmin=-0.5, xmax = 0.5)
   plt.ylim([1,10**5])
   #counts, bins, _ = plt.hist(n_deviation, bins=len(set(n_deviation)), edgecolor="white")
   counts, bins, _ = plt.hist(n_deviation, edgecolor = 'white')
