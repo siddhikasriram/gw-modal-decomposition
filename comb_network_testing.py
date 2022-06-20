@@ -368,7 +368,7 @@ def show_two_modes_output(y_test, y_test_pred, fname, heading):
 
   #print("mdiff after mean ", mdiff)
   #print(f"{heading} ndiff after mean", ndiff1)
-  plt.figure(figsize=(30,30)) # verticle rectangle sheet for 3 x 2 subplots
+  plt.figure(figsize=(15,15)) # verticle rectangle sheet for 3 x 2 subplots
   plt.suptitle(f'{heading} with {sample_size} samples')
 
   plt.subplot(2,2,1)
@@ -394,13 +394,13 @@ def show_two_modes_output(y_test, y_test_pred, fname, heading):
   plt.xlabel('m1 - m2 deviation')
   plt.ylabel('No. of Samples')
   plt.yscale('log')
-  m_deviation = y_test_pred[:, 0]-y_test_pred[:, 2]
+  n_deviation = y_test_pred[:, 0]-y_test_pred[:, 2]
   plt.xlim(xmin=-0.5, xmax = 0.5)
   plt.ylim([1,10**5])
-  counts, bins, _ = plt.hist(m_deviation, edgecolor="white")
-  # bins=len(set(m_deviation)), 
+  #counts, bins, _ = plt.hist(n_deviation, bins=len(set(n_deviation)), edgecolor="white")
+  counts, bins, _ = plt.hist(n_deviation, edgecolor = 'white')
   for n, b in zip(counts, bins):
-    plt.gca().text(b + 0.01, n, int(n), rotation = 45)  # +0.1 to center text
+    plt.gca().text(b+0.01, n, int(n), rotation = 45)  # +0.1 to center text
 
   plt.subplot(2,2,3)
   plt.title('TEM n1 & n2 - Mean difference for n combinations')
