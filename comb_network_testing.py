@@ -296,7 +296,7 @@ def show_mode_output(y_test, y_test_pred, fname, heading):
 
 def show_two_modes_output(y_test, y_test_pred, fname, heading):
 
-  #default size = 10
+    #default size = 10
   params = {'axes.labelsize': 14, #Fontsize of the x and y labels
         'axes.titlesize': 15, #Fontsize of the axes title
         'figure.titlesize': 18, #Size of the figure title (.suptitle())
@@ -368,13 +368,13 @@ def show_two_modes_output(y_test, y_test_pred, fname, heading):
 
   #print("mdiff after mean ", mdiff)
   #print(f"{heading} ndiff after mean", ndiff1)
-  plt.figure(figsize=(15,15)) # verticle rectangle sheet for 3 x 2 subplots
+  plt.figure(figsize=(30,30)) # verticle rectangle sheet for 3 x 2 subplots
   plt.suptitle(f'{heading} with {sample_size} samples')
 
   plt.subplot(2,2,1)
   plt.title('TEM m1 & m2 - Mean difference for m combinations')
   plt.xlabel('TEM m1 actual')
-  plt.ylabel('TEM m2 actual')
+  plt.ylabel('TEM m2 actual') 
   cm = plt.cm.get_cmap('brg')
   c_list_m = [] # list has to be passed for python version 3.7
 
@@ -385,7 +385,7 @@ def show_two_modes_output(y_test, y_test_pred, fname, heading):
   sc = plt.scatter(y_test[:, 0], y_test[:, 2], c=c_list_m, cmap = cm)
   #sc = plt.scatter(y_test[:, 0][i], y_test[:, 1][i], mdiff[z], cmap = cm) - indexing not allowed in v-3.7
   cbar1 = plt.colorbar(sc)
-  #cbar1.mappable.set_clim(vmin=-1,vmax=1)
+  cbar1.mappable.set_clim(vmin=-0.5,vmax=0.5)
 
   
 
@@ -400,7 +400,7 @@ def show_two_modes_output(y_test, y_test_pred, fname, heading):
   counts, bins, _ = plt.hist(m_deviation, edgecolor="white")
   # bins=len(set(m_deviation)), 
   for n, b in zip(counts, bins):
-    plt.gca().text(b + 0.05, n, int(n), rotation = 45)  # +0.1 to center text
+    plt.gca().text(b + 0.01, n, int(n), rotation = 45)  # +0.1 to center text
 
   plt.subplot(2,2,3)
   plt.title('TEM n1 & n2 - Mean difference for n combinations')
@@ -420,7 +420,7 @@ def show_two_modes_output(y_test, y_test_pred, fname, heading):
   sc = plt.scatter(y_test[:, 1], y_test[:, 3], c=c_list_n, cmap=cm)
   print("c_list_n", c_list_n)
   cbar2 = plt.colorbar(sc)
-  cbar2.mappable.set_clim(vmin=-1,vmax=1)
+  cbar2.mappable.set_clim(vmin=-0.5,vmax=0.5)
   
   
   plt.subplot(2,2,4)
@@ -434,7 +434,7 @@ def show_two_modes_output(y_test, y_test_pred, fname, heading):
   #counts, bins, _ = plt.hist(n_deviation, bins=len(set(n_deviation)), edgecolor="white")
   counts, bins, _ = plt.hist(n_deviation, edgecolor = 'white')
   for n, b in zip(counts, bins):
-    plt.gca().text(b+0.05, n, int(n), rotation = 45)  # +0.1 to center text
+    plt.gca().text(b+0.01, n, int(n), rotation = 45)  # +0.1 to center text
     
   plt.show()
   plt.savefig(fname)
@@ -762,7 +762,7 @@ if __name__ == '__main__':
   
   main_mode_op = '1.png'
   main_off_op = '2.png'
-  main_two_mode_op = '010.png'
+  main_two_mode_op = '017.png'
   main_heading = 'Performance of the model for the entire test dataset'
   #show_mode_output(y_test, y_test_pred, main_mode_op, main_heading)
   #show_offset_output(y_test, y_test_pred, main_off_op, main_heading)
@@ -801,7 +801,7 @@ if __name__ == '__main__':
   low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.3'
   low_op_mode = '3.png'
   low_op_off = '12.png'
-  low_two_mode_op = '011.png'
+  low_two_mode_op = '016.png'
   #show_mode_output(low_noise_act, low_noise_pred, low_op_mode, low_noise_heading)
   #show_offset_output(low_noise_act, low_noise_pred, low_op_off, low_noise_heading)
   show_two_modes_output(y_test, y_test_pred, low_two_mode_op, low_noise_heading)
@@ -812,7 +812,7 @@ if __name__ == '__main__':
   med_noise_heading = 'Performance of the model when the noise is between 0.3 and 0.6'
   med_op_mode = '5.png'
   med_op_off = '13.png'
-  med_two_mode_op = '012.png'
+  med_two_mode_op = '015.png'
   #show_mode_output(med_noise_act, med_noise_pred, med_op_mode, med_noise_heading)
   #show_offset_output(med_noise_act, med_noise_pred, med_op_off, med_noise_heading)
   show_two_modes_output(y_test, y_test_pred, med_two_mode_op, med_noise_heading)
@@ -823,7 +823,7 @@ if __name__ == '__main__':
   high_noise_heading = 'Performance of the model when the noise is between 0.6 and 0.9'
   high_op_mode = '7.png'
   high_op_off = '14.png'
-  high_two_mode_op = '013.png'
+  high_two_mode_op = '014.png'
   #show_mode_output(high_noise_act, high_noise_pred, high_op_mode, high_noise_heading)
   #show_offset_output(high_noise_act, high_noise_pred, high_op_off, high_noise_heading)
   show_two_modes_output(y_test, y_test_pred, high_two_mode_op, high_noise_heading)
