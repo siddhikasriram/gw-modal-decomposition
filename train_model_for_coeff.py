@@ -92,6 +92,7 @@ def labelling (fileName):
     labels.append(int(image[13]))
     labels.append(int(image[15]))
 
+    '''
     if image[22] == 'p':
       labels.append(64 + int(image[23:25]))
     else:
@@ -101,6 +102,7 @@ def labelling (fileName):
       labels.append(64 + int("+"+image[27:29]))
     else:
       labels.append(64 + int("-"+image[27:29]))
+    '''
 
     yParam.append(labels)
   yParam = np.array([np.array(x) for x in yParam])
