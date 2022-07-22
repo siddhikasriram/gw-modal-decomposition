@@ -70,7 +70,7 @@ print('Testing: ', len(test_FileNames))
 
 
 for name in (test_FileNames):
-  shutil.copy('/home/siddhika/dataset/'+name, '/home/siddhika/gw-modal-decomposition/Output/coeff')
+  shutil.copy('/home/siddhika/dataset_coeff/'+name, '/home/siddhika/gw-modal-decomposition/Output/coeff')
 
 
 #name = train_FileNames[0]
