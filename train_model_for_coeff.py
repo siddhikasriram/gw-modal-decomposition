@@ -246,7 +246,7 @@ plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['Loss', 'Val Loss'], loc='upper left')
 
-#plt.savefig("result.png")
+plt.savefig("result_coeff.png")
 plt.show()
 #predict = model.predict(x_test)
 #print(predict)
