@@ -32,8 +32,8 @@ from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.model_selection import StratifiedKFold
 from sklearn.model_selection import cross_val_score
 # load dataset
-#root_dir = '/home/siddhika/dataset/'
-root_dir = 'home/GWCNN/GW_input_data/gw-modal-decomposition/dataset/coeff'
+root_dir = '/home/siddhika/dataset_coeff'
+#root_dir = 'home/GWCNN/GW_input_data/gw-modal-decomposition/dataset/coeff'
 allFileNames = os.listdir(root_dir)
 
 #os.makedirs("Output" +'/train')
@@ -69,8 +69,8 @@ print('Validation: ', len(val_FileNames))
 print('Testing: ', len(test_FileNames))
 
 
-# for name in (test_FileNames):
-#   shutil.copy('/home/siddhika/dataset/'+name, '/home/siddhika/gw-modal-decomposition/Output/test2')
+for name in (test_FileNames):
+  shutil.copy('/home/siddhika/dataset/'+name, '/home/siddhika/gw-modal-decomposition/Output/coeff')
 
 
 #name = train_FileNames[0]
@@ -212,7 +212,7 @@ model = KerasClassifier(build_fn = model_def)
 
 #model.set_params(**grid_result.best_params_)
 
-history = model.fit(x_train, yTrain, epochs = 5, validation_data = (x_val, yVal))
+history = model.fit(x_train, yTrain, epochs = 45, validation_data = (x_val, yVal))
 
 #model.evaluate(x_train, yTrain)
 
@@ -223,7 +223,7 @@ history = model.fit(x_train, yTrain, epochs = 5, validation_data = (x_val, yVal)
 #print(results.mean())
 
 #saving the model
-#model.model.save('new_model.h5')
+model.model.save('model_coeff.h5')
 print("Saved model to disk")
 print(history.history.keys())
 
