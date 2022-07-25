@@ -230,14 +230,10 @@ def show_coeff_output(y_test, y_test_pred, fname, heading):
 
   plt.figure(figsize=(20,20)) # verticle rectangle sheet for 3 x 2 subplots
   plt.suptitle(f'{heading} with {sample_size} samples')
-
-  # labels = ['a (0,0)', 'b(1,0)', 'c(0,1)', 'd(1,1)']
-  # for i in actual:
-  #   plt.legend( i, labels[i] )
   
   plt.xlabel('Deviation of co-efficients')
   plt.ylabel('Number of samples')
-  #plt.yscale('log')
+  plt.yscale('log')
 
   plt.hist([diff[0],diff[1], diff[2], diff[3]], label = ['a(0,0)', 'b(1,0)', 'c(0,1)', 'd(1,1)'])
   plt.legend(loc='upper right')
@@ -315,7 +311,7 @@ if __name__ == '__main__':
   for i, noise in enumerate(y_test[:, 4]):
     noiselist.append(noise)
   
-  main_mode_op = 'c31.png'
+  main_mode_op = 'c41.png'
   main_off_op = '2.png'
   main_heading = 'Co-efficient of the modes [ a(0,0) + b(1,0) + c(0,1) + d(1,1) ] for the entire test dataset'
   show_coeff_output(y_test, y_test_pred, main_mode_op, main_heading)
@@ -352,7 +348,7 @@ if __name__ == '__main__':
   low_noise_act = np.array([np.array(x) for x in low_noise_act])
   low_noise_pred = np.array([np.array(x) for x in low_noise_pred])
   low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.3'
-  low_op_mode = 'c33.png'
+  low_op_mode = 'c43.png'
   low_op_off = '4.png'
   show_coeff_output(low_noise_act, low_noise_pred, low_op_mode, low_noise_heading)
   #show_offset_output(low_noise_act, low_noise_pred, low_op_off, low_noise_heading)
@@ -360,7 +356,7 @@ if __name__ == '__main__':
   med_noise_act = np.array([np.array(x) for x in med_noise_act])
   med_noise_pred = np.array([np.array(x) for x in med_noise_pred])
   med_noise_heading = 'Performance of the model when the noise is between 0.3 and 0.6'
-  med_op_mode = 'c35.png'
+  med_op_mode = 'c45.png'
   med_op_off = '6.png'
   show_coeff_output(med_noise_act, med_noise_pred, med_op_mode, med_noise_heading)
   #show_offset_output(med_noise_act, med_noise_pred, med_op_off, med_noise_heading)
@@ -368,7 +364,7 @@ if __name__ == '__main__':
   high_noise_act = np.array([np.array(x) for x in high_noise_act])
   high_noise_pred = np.array([np.array(x) for x in high_noise_pred])
   high_noise_heading = 'Performance of the model when the noise is between 0.6 and 0.9'
-  high_op_mode = 'c37.png'
+  high_op_mode = 'c47.png'
   high_op_off = '8.png'
   show_coeff_output(high_noise_act, high_noise_pred, high_op_mode, high_noise_heading)
   #show_offset_output(high_noise_act, high_noise_pred, high_op_off, high_noise_heading)
