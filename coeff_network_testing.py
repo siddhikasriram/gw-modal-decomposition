@@ -250,15 +250,15 @@ if __name__ == '__main__':
 
   
   #Loading the saved model
-  model = keras.models.load_model('/home/sid/GWCNN/GW_input_data/gw-modal-decomposition/model_coeff.h5')
-  #model = keras.models.load_model('/home/siddhika/gw-modal-decomposition/new_model_comb.h5')
+  #model = keras.models.load_model('/home/sid/GWCNN/GW_input_data/gw-modal-decomposition/model_coeff.h5')
+  model = keras.models.load_model('/home/siddhika/gw-modal-decomposition/model_coeff.h5')
   #print(model.summary())
   
   
   #Fetching the test data
   img_size = 128
-  pathName = '/home/sid/GWCNN/GW_input_data/gw-modal-decomposition/dataset/coeff'
-  #pathName = '/home/siddhika/gw-modal-decomposition/Output/c_test'
+  #pathName = '/home/sid/GWCNN/GW_input_data/gw-modal-decomposition/dataset/coeff'
+  pathName = '/home/siddhika/gw-modal-decomposition/Output/coeff'
   testing = getdata(pathName)
   x_test = np.array(testing) / 255
   x_test.reshape(-1, img_size, img_size, 1)
@@ -315,9 +315,8 @@ if __name__ == '__main__':
   for i, noise in enumerate(y_test[:, 4]):
     noiselist.append(noise)
   
-  main_mode_op = '1.png'
+  main_mode_op = 'c1.png'
   main_off_op = '2.png'
-  main_two_mode_op = '01.png'
   main_heading = 'Co-efficient of the modes [ a(0,0) + b(1,0) + c(0,1) + d(1,1) ] for the entire test dataset'
   show_coeff_output(y_test, y_test_pred, main_mode_op, main_heading)
   #show_offset_output(y_test, y_test_pred, main_off_op, main_heading)
@@ -353,7 +352,7 @@ if __name__ == '__main__':
   low_noise_act = np.array([np.array(x) for x in low_noise_act])
   low_noise_pred = np.array([np.array(x) for x in low_noise_pred])
   low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.3'
-  low_op_mode = '3.png'
+  low_op_mode = 'c3.png'
   low_op_off = '4.png'
   show_coeff_output(low_noise_act, low_noise_pred, low_op_mode, low_noise_heading)
   #show_offset_output(low_noise_act, low_noise_pred, low_op_off, low_noise_heading)
@@ -361,17 +360,17 @@ if __name__ == '__main__':
   med_noise_act = np.array([np.array(x) for x in med_noise_act])
   med_noise_pred = np.array([np.array(x) for x in med_noise_pred])
   med_noise_heading = 'Performance of the model when the noise is between 0.3 and 0.6'
-  med_op_mode = '5.png'
+  med_op_mode = 'c5.png'
   med_op_off = '6.png'
-  #show_mode_output(med_noise_act, med_noise_pred, med_op_mode, med_noise_heading)
+  show_coeff_output(med_noise_act, med_noise_pred, med_op_mode, med_noise_heading)
   #show_offset_output(med_noise_act, med_noise_pred, med_op_off, med_noise_heading)
 
   high_noise_act = np.array([np.array(x) for x in high_noise_act])
   high_noise_pred = np.array([np.array(x) for x in high_noise_pred])
   high_noise_heading = 'Performance of the model when the noise is between 0.6 and 0.9'
-  high_op_mode = '7.png'
+  high_op_mode = 'c7.png'
   high_op_off = '8.png'
-  #show_mode_output(high_noise_act, high_noise_pred, high_op_mode, high_noise_heading)
+  show_coeff_output(high_noise_act, high_noise_pred, high_op_mode, high_noise_heading)
   #show_offset_output(high_noise_act, high_noise_pred, high_op_off, high_noise_heading)
 
   #combined plot
