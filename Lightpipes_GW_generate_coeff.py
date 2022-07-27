@@ -1,4 +1,4 @@
-
+from asyncio import AbstractChildWatcher
 import numpy as np
 import os
 from LightPipes import *
@@ -9,7 +9,7 @@ from numpy.lib.index_tricks import index_exp
 np.random.seed(7561)
 
 # Number of images to be generated
-Ntot=20
+Ntot=40000
 
 # Defining variables: Wavelength of 1064 Nanometer, 40*40 mm2 sqaure grid with 128x128 pixels
 wavelength = 1064*nm
@@ -32,7 +32,7 @@ mode_m4=1
 mode_n4=1
 
 a = np.random.randint(1,max_coeff,Ntot) 
-b = np.random.randint(1,max_coeff,Ntot) #a(0,0) + b (1, 0) + c(0,1) 
+b = np.random.randint(1,max_coeff,Ntot) #a(0,0) + b (1, 0) + c(0,1) + d(1,1)
 c = np.random.randint(1,max_coeff,Ntot)
 d = np.random.randint(1,max_coeff,Ntot)
 
@@ -71,13 +71,13 @@ for num in range(Ntot):
    F3=GaussBeam(F0, w0, LG=LG, n=mode_n3, m=mode_m3)
    F4=GaussBeam(F0, w0, LG=LG, n=mode_n4, m=mode_m4)
    Iimg1=Intensity(F1,1) #Intensity is calculated and normalized to 255 (2 -> 255, 1 -> 1.0, 0 -> not normalized)
-   Iimg1=Iimg1+aa
+   Iimg1=Iimg1*aa
    Iimg2=Intensity(F2,1)
-   Iimg2=Iimg2+bb
+   Iimg2=Iimg2*bb
    Iimg3=Intensity(F3,1)
-   Iimg3=Iimg3+cc
+   Iimg3=Iimg3*cc
    Iimg4=Intensity(F4,1)
-   Iimg4=Iimg4+dd
+   Iimg4=Iimg4*dd
    Iimg5=Iimg1+Iimg2+Iimg3+Iimg4
   
 
