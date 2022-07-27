@@ -190,11 +190,11 @@ def model_def(dropout_rate = 0.1):
   model.add(Flatten())
   model.add(Dense(8, activation='relu'))
   model.add(BatchNormalization(axis= 1))
-  model.add(Dense(4, activation='relu'))
+  model.add(Dense(4))
 
   model.summary()
 
-  opt = keras.optimizers.Adam(learning_rate=0.001)
+  opt = keras.optimizers.Adam(learning_rate=0.0001)
   model.compile(optimizer = opt , loss ='mean_squared_error' , metrics = ['accuracy'])
   return model
 
@@ -203,7 +203,7 @@ def model_def(dropout_rate = 0.1):
 model = KerasClassifier(build_fn = model_def)
 
 #dropout_rate = [0.2, 0.4, 0.6]
-#batch_size = [10, 70, 150]
+batchsize = 70
 #epochs =[20, 50, 70]
 
 #param_grid = dict(dropout_rate = dropout_rate, batch_size = batch_size, epochs = epochs)
@@ -214,7 +214,7 @@ model = KerasClassifier(build_fn = model_def)
 
 #model.set_params(**grid_result.best_params_)
 
-history = model.fit(x_train, yTrain, epochs = 45, validation_data = (x_val, yVal))
+history = model.fit(x_train, yTrain, epochs = 45, batch_size = batchsize, validation_data = (x_val, yVal))
 
 #model.evaluate(x_train, yTrain)
 
@@ -248,7 +248,7 @@ plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['Loss', 'Val Loss'], loc='upper left')
 
-plt.savefig("result_coeff.png")
+plt.savefig("model_result_coeff.png")
 plt.show()
 #predict = model.predict(x_test)
 #print(predict)
