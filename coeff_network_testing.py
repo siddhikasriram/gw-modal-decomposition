@@ -315,8 +315,8 @@ if __name__ == '__main__':
   '''
 
  
-  # print("ytest", y_test)
-  # print("ypred", y_test_pred)
+  print("ytest", y_test)
+  print("ypred", y_test_pred)
 
   #evaluate = model.evaluate(x_test, y_test)
   
@@ -326,7 +326,7 @@ if __name__ == '__main__':
   for i, noise in enumerate(y_test[:, 4]):
     noiselist.append(noise)
   
-  main_mode_op = '1.png'
+  main_mode_op = 'cr12.png'
   main_off_op = 'cr12.png'
   main_heading = 'Co-efficient of the modes [ a(0,0) + b(1,0) + c(0,1) + d(1,1) ] for the entire test dataset'
   show_coeff_output(y_test, y_test_pred, main_mode_op, main_heading)
