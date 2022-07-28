@@ -38,6 +38,8 @@ def labelling (fileName):
     labels.append(int(image[13]))
     labels.append(int(image[15]))
 
+    
+
     if image[22] == 'p':
       labels.append(64 + int(image[23:25]))
     else:
@@ -47,6 +49,7 @@ def labelling (fileName):
       labels.append(64 + int("+"+image[27:29]))
     else:
       labels.append(64 + int("-"+image[27:29]))
+    
 
     labels.append(float(image[17:21])) # noise level
 
@@ -254,20 +257,19 @@ def show_coeff_output(y_test, y_test_pred, fname, heading):
   plt.savefig(fname)
 
 
-
 if __name__ == '__main__':
 
   
   #Loading the saved model
-  #model = keras.models.load_model('/home/sid/GWCNN/GW_input_data/gw-modal-decomposition/model_coeff.h5')
-  model = keras.models.load_model('/home/siddhika/gw-modal-decomposition/model_coeff.h5')
+  model = keras.models.load_model('/home/sid/GWCNN/GW_input_data/gw-modal-decomposition/model_off_coeff.h5')
+  #model = keras.models.load_model('/home/siddhika/gw-modal-decomposition/new_model_comb.h5')
   #print(model.summary())
   
   
   #Fetching the test data
   img_size = 128
-  #pathName = '/home/sid/GWCNN/GW_input_data/gw-modal-decomposition/dataset/coeff'
-  pathName = '/home/siddhika/gw-modal-decomposition/Output/coeff'
+  pathName = '/home/sid/GWCNN/GW_input_data/gw-modal-decomposition/dataset/coeff'
+  #pathName = '/home/siddhika/gw-modal-decomposition/Output/c_test'
   testing = getdata(pathName)
   x_test = np.array(testing) / 255
   x_test.reshape(-1, img_size, img_size, 1)
@@ -313,8 +315,8 @@ if __name__ == '__main__':
   '''
 
  
-  print("ytest", y_test)
-  print("ypred", y_test_pred)
+  # print("ytest", y_test)
+  # print("ypred", y_test_pred)
 
   #evaluate = model.evaluate(x_test, y_test)
   
@@ -324,8 +326,8 @@ if __name__ == '__main__':
   for i, noise in enumerate(y_test[:, 4]):
     noiselist.append(noise)
   
-  main_mode_op = 'cr10.png'
-  main_off_op = '2.png'
+  main_mode_op = '1.png'
+  main_off_op = 'cr12.png'
   main_heading = 'Co-efficient of the modes [ a(0,0) + b(1,0) + c(0,1) + d(1,1) ] for the entire test dataset'
   show_coeff_output(y_test, y_test_pred, main_mode_op, main_heading)
   #show_offset_output(y_test, y_test_pred, main_off_op, main_heading)
@@ -361,7 +363,7 @@ if __name__ == '__main__':
   low_noise_act = np.array([np.array(x) for x in low_noise_act])
   low_noise_pred = np.array([np.array(x) for x in low_noise_pred])
   low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.3'
-  low_op_mode = 'cr11.png'
+  low_op_mode = 'cr10.png'
   low_op_off = '4.png'
   show_coeff_output(low_noise_act, low_noise_pred, low_op_mode, low_noise_heading)
   #show_offset_output(low_noise_act, low_noise_pred, low_op_off, low_noise_heading)
@@ -369,7 +371,7 @@ if __name__ == '__main__':
   med_noise_act = np.array([np.array(x) for x in med_noise_act])
   med_noise_pred = np.array([np.array(x) for x in med_noise_pred])
   med_noise_heading = 'Performance of the model when the noise is between 0.3 and 0.6'
-  med_op_mode = 'cr12.png'
+  med_op_mode = 'cr11.png'
   med_op_off = '6.png'
   show_coeff_output(med_noise_act, med_noise_pred, med_op_mode, med_noise_heading)
   #show_offset_output(med_noise_act, med_noise_pred, med_op_off, med_noise_heading)
