@@ -193,7 +193,7 @@ def model_def(dropout_rate = 0.1):
 
   model.summary()
 
-  opt = keras.optimizers.Adam(learning_rate=0.0001)
+  opt = keras.optimizers.Adam(learning_rate=0.001)
   model.compile(optimizer = opt , loss ='mean_squared_error' , metrics = ['accuracy'])
   return model
 
@@ -213,7 +213,7 @@ batchsize = 70
 
 #model.set_params(**grid_result.best_params_)
 
-history = model.fit(x_train, yTrain, epochs = 45, batch_size = batchsize, validation_data = (x_val, yVal))
+history = model.fit(x_train, yTrain, epochs = 40, batch_size = batchsize, validation_data = (x_val, yVal))
 
 #model.evaluate(x_train, yTrain)
 
