@@ -204,7 +204,7 @@ def show_coeff_output(y_test, y_test_pred, fname, heading):
   #catalog = open(f'results_{fname}.txt', 'w')
   sample_size = len(y_test)
   
-  plt.figure(figsize=(20,20)) # verticle rectangle sheet for 3 x 2 subplots
+  plt.figure(figsize=(13,20)) # verticle rectangle sheet for 3 x 2 subplots
   plt.suptitle(f'{heading} with {sample_size} samples')
 
   plt.subplot(3,2,1)
