@@ -214,7 +214,8 @@ def show_coeff_output(y_test, y_test_pred, fname, heading):
   plt.axis([0, 9, 0, 9])
   plt.plot([0.5,8.5],[0.5,8.5], color = 'grey')
   plt.scatter(y_test[:, 0], y_test_pred[:, 0], s=5, color = 'crimson', marker='*')
-
+ 
+  
   plt.subplot(3,2,2)
   plt.title("Co-efficient 'b' (1,0)")
   plt.xlabel('Actual values ')
@@ -365,6 +366,7 @@ if __name__ == '__main__':
   low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.3'
   low_op_mode = 'cr10.png'
   low_op_off = '4.png'
+  print(low_noise_act, low_noise_pred)
   show_coeff_output(low_noise_act, low_noise_pred, low_op_mode, low_noise_heading)
   #show_offset_output(low_noise_act, low_noise_pred, low_op_off, low_noise_heading)
 
