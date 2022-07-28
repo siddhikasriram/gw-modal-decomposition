@@ -323,13 +323,13 @@ if __name__ == '__main__':
   #Plot the performance of the model
   noiselist=[]
   #print(y_test)
-  for i, noise in enumerate(y_test[:, 4]):
+  for i, noise in enumerate(y_test[:, 6]):
     noiselist.append(noise)
   
   main_mode_op = 'cr14.png'
   main_off_op = 'cr12.png'
   main_heading = 'Co-efficient of the modes [ a(0,0) + b(1,0) + c(0,1) + d(1,1) ] for the entire test dataset'
-  show_coeff_output(y_test, y_test_pred, main_mode_op, main_heading)
+  #show_coeff_output(y_test, y_test_pred, main_mode_op, main_heading)
   #show_offset_output(y_test, y_test_pred, main_off_op, main_heading)
 
   #Access perfromace based on noise levels - split to three ranges
