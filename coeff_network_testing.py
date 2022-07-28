@@ -189,12 +189,12 @@ def show_offset_output(y_test, y_test_pred, fname, heading):
 def show_coeff_output(y_test, y_test_pred, fname, heading):
 
   #default size = 10
-  params = {'axes.labelsize': 14, #Fontsize of the x and y labels
-        'axes.titlesize': 15, #Fontsize of the axes title
-        'figure.titlesize': 18, #Size of the figure title (.suptitle())
-        'xtick.labelsize': 12, #Fontsize of the tick labels
-        'ytick.labelsize': 12,
-        'legend.fontsize': 12} #Fontsize for legends (plt.legend()
+  params = {'axes.labelsize': 17, #Fontsize of the x and y labels
+        'axes.titlesize': 22, #Fontsize of the axes title
+        'figure.titlesize': 19, #Size of the figure title (.suptitle())
+        'xtick.labelsize': 15, #Fontsize of the tick labels
+        'ytick.labelsize': 15,
+        'legend.fontsize': 16} #Fontsize for legends (plt.legend()
 
   plt.rcParams.update(params) 
 
@@ -341,7 +341,7 @@ if __name__ == '__main__':
   for i, noise in enumerate(y_test[:, 4]):
     noiselist.append(noise)
   
-  main_mode_op = 'cr1.png'
+  main_mode_op = 'cr5.png'
   main_off_op = '2.png'
   main_heading = 'Co-efficient of the modes [ a(0,0) + b(1,0) + c(0,1) + d(1,1) ] for the entire test dataset'
   show_coeff_output(y_test, y_test_pred, main_mode_op, main_heading)
@@ -378,7 +378,7 @@ if __name__ == '__main__':
   low_noise_act = np.array([np.array(x) for x in low_noise_act])
   low_noise_pred = np.array([np.array(x) for x in low_noise_pred])
   low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.3'
-  low_op_mode = 'cr2.png'
+  low_op_mode = 'cr6.png'
   low_op_off = '4.png'
   show_coeff_output(low_noise_act, low_noise_pred, low_op_mode, low_noise_heading)
   #show_offset_output(low_noise_act, low_noise_pred, low_op_off, low_noise_heading)
@@ -386,7 +386,7 @@ if __name__ == '__main__':
   med_noise_act = np.array([np.array(x) for x in med_noise_act])
   med_noise_pred = np.array([np.array(x) for x in med_noise_pred])
   med_noise_heading = 'Performance of the model when the noise is between 0.3 and 0.6'
-  med_op_mode = 'cr3.png'
+  med_op_mode = 'cr7.png'
   med_op_off = '6.png'
   show_coeff_output(med_noise_act, med_noise_pred, med_op_mode, med_noise_heading)
   #show_offset_output(med_noise_act, med_noise_pred, med_op_off, med_noise_heading)
@@ -394,7 +394,7 @@ if __name__ == '__main__':
   high_noise_act = np.array([np.array(x) for x in high_noise_act])
   high_noise_pred = np.array([np.array(x) for x in high_noise_pred])
   high_noise_heading = 'Performance of the model when the noise is between 0.6 and 0.9'
-  high_op_mode = 'cr4.png'
+  high_op_mode = 'cr8.png'
   high_op_off = '8.png'
   show_coeff_output(high_noise_act, high_noise_pred, high_op_mode, high_noise_heading)
   #show_offset_output(high_noise_act, high_noise_pred, high_op_off, high_noise_heading)
