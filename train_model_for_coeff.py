@@ -69,8 +69,8 @@ print('Validation: ', len(val_FileNames))
 print('Testing: ', len(test_FileNames))
 
 
-for name in (test_FileNames):
-  shutil.copy('/home/siddhika/dataset_coeff/'+name, '/home/siddhika/gw-modal-decomposition/Output/coeff')
+# for name in (test_FileNames):
+#   shutil.copy('/home/siddhika/dataset_coeff/'+name, '/home/siddhika/gw-modal-decomposition/Output/coeff')
 
 
 #name = train_FileNames[0]
@@ -92,7 +92,6 @@ def labelling (fileName):
     labels.append(int(image[13]))
     labels.append(int(image[15]))
 
-    '''
     if image[22] == 'p':
       labels.append(64 + int(image[23:25]))
     else:
@@ -102,7 +101,7 @@ def labelling (fileName):
       labels.append(64 + int("+"+image[27:29]))
     else:
       labels.append(64 + int("-"+image[27:29]))
-    '''
+    
 
     yParam.append(labels)
   yParam = np.array([np.array(x) for x in yParam])
@@ -173,24 +172,24 @@ def model_def(dropout_rate = 0.1):
   model.add(MaxPool2D(pool_size = (2,2)))
   model.add(Dropout(dropout_rate))
 
-  model.add(Conv2D(32, (3, 3), padding="same", activation="relu"))
+  model.add(Conv2D(36, (3, 3), padding="same", activation="relu"))
   model.add(BatchNormalization(axis= 1))
   model.add(MaxPool2D(pool_size = (2,2)))
 
-  model.add(Conv2D(32, (3, 3), padding="same", activation="relu"))
+  model.add(Conv2D(36, (3, 3), padding="same", activation="relu"))
   model.add(BatchNormalization(axis= 1))
   model.add(MaxPool2D(pool_size = (2,2)))
   model.add(Dropout(dropout_rate))
 
-  model.add(Conv2D(16, (3, 3), padding="same", activation="relu"))
+  model.add(Conv2D(18, (3, 3), padding="same", activation="relu"))
   model.add(BatchNormalization(axis= 1))
   model.add(MaxPool2D(pool_size = (2,2)))
   model.add(Dropout(dropout_rate)) 
 
   model.add(Flatten())
-  model.add(Dense(8, activation='relu'))
+  model.add(Dense(12, activation='relu'))
   model.add(BatchNormalization(axis= 1))
-  model.add(Dense(4))
+  model.add(Dense(6))
 
   model.summary()
 
@@ -225,7 +224,7 @@ history = model.fit(x_train, yTrain, epochs = 45, batch_size = batchsize, valida
 #print(results.mean())
 
 #saving the model
-model.model.save('model_coeff.h5')
+model.model.save('model_off_coeff.h5')
 print("Saved model to disk")
 print(history.history.keys())
 
@@ -248,7 +247,7 @@ plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['Loss', 'Val Loss'], loc='upper left')
 
-plt.savefig("model_result_coeff.png")
+plt.savefig("result_off_coeff.png")
 plt.show()
 #predict = model.predict(x_test)
 #print(predict)
