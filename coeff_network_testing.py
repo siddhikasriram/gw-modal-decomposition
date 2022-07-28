@@ -326,7 +326,7 @@ if __name__ == '__main__':
   for i, noise in enumerate(y_test[:, 4]):
     noiselist.append(noise)
   
-  main_mode_op = 'cr12.png'
+  main_mode_op = 'cr14.png'
   main_off_op = 'cr12.png'
   main_heading = 'Co-efficient of the modes [ a(0,0) + b(1,0) + c(0,1) + d(1,1) ] for the entire test dataset'
   show_coeff_output(y_test, y_test_pred, main_mode_op, main_heading)
@@ -348,16 +348,16 @@ if __name__ == '__main__':
     pred = y_test_pred[ind]
     noise = y_test[ind,4]
     if noise >= 0.05 and noise <= 0.3:
-      low_noise_act.append(y_test[ind,0:4])
-      low_noise_pred.append(y_test_pred[ind, 0:4])
+      low_noise_act.append(y_test[ind,0:6])
+      low_noise_pred.append(y_test_pred[ind, 0:6])
       lownoiselist.append(noise)
     elif noise > 0.3 and noise <=0.6:
-      med_noise_act.append(y_test[ind,0:4])
-      med_noise_pred.append(y_test_pred[ind, 0:4])
+      med_noise_act.append(y_test[ind,0:6])
+      med_noise_pred.append(y_test_pred[ind, 0:6])
       mednoiselist.append(noise)
     else:
-      high_noise_act.append(y_test[ind,0:4])
-      high_noise_pred.append(y_test_pred[ind, 0:4])
+      high_noise_act.append(y_test[ind,0:6])
+      high_noise_pred.append(y_test_pred[ind, 0:6])
       highnoiselist.append(noise)  
 
   low_noise_act = np.array([np.array(x) for x in low_noise_act])
