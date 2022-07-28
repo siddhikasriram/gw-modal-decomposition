@@ -203,13 +203,13 @@ def show_coeff_output(y_test, y_test_pred, fname, heading):
 
   #catalog = open(f'results_{fname}.txt', 'w')
   sample_size = len(y_test)
-  actual = y_test.copy()
-  predicted = y_test_pred.copy()
-  actual = [tuple(x[0:4]) for x in actual] 
-  predicted = [tuple(x[0:4]) for x in predicted] 
-
+  # actual = y_test.copy()
+  # predicted = y_test_pred.copy()
+  # actual = [tuple(x[0:4]) for x in actual] 
+  # predicted = [tuple(x[0:4]) for x in predicted] 
+  
+  '''
   #print("actual combos of m and n ", actual)
-
   diff=[]
   # a_dev = []
   # b_dev = []
@@ -227,16 +227,46 @@ def show_coeff_output(y_test, y_test_pred, fname, heading):
     # b_dev.append(b)
     # c_dev.append(c)
     # d_dev.append(d)  
+  #print("diff", diff)
 
-  plt.figure(figsize=(20,20)) # verticle rectangle sheet for 3 x 2 subplots
-  plt.suptitle(f'{heading} with {sample_size} samples')
   
   plt.xlabel('Deviation of co-efficients')
   plt.ylabel('Number of samples')
-  plt.yscale('log')
-
-  plt.hist([diff[0],diff[1], diff[2], diff[3]], label = ['a(0,0)', 'b(1,0)', 'c(0,1)', 'd(1,1)'])
+  plt.xlim(xmin=0, xmax = 10)
+  print('diff[0],diff[1], diff[2], diff[3]', diff[0])
+  plt.hist(diff, label = ['a(0,0)', 'b(1,0)', 'c(0,1)', 'd(1,1)'])
   plt.legend(loc='upper right')
+  '''
+  plt.figure(figsize=(20,20)) # verticle rectangle sheet for 3 x 2 subplots
+  plt.suptitle(f'{heading} with {sample_size} samples')
+
+  plt.subplot(2,2,1)
+  plt.title("Co-efficient 'a' (0,0)")
+  plt.xlabel('Actual values ')
+  plt.ylabel('Predicted values')
+  plt.axis([0, 10, 0, 10])
+  plt.scatter(y_test[:, 0], y_test_pred[:, 0], s=5, color = 'red', marker='*')
+
+  plt.subplot(2,2,2)
+  plt.title("Co-efficient 'b' (1,0)")
+  plt.xlabel('Actual values ')
+  plt.ylabel('Predicted values')
+  plt.axis([0, 10, 0, 10])
+  plt.scatter(y_test[:, 1], y_test_pred[:, 1], s=5, color = 'green', marker='*')
+
+  plt.subplot(2,2,3)
+  plt.title("Co-efficient 'c' (0,1)")
+  plt.xlabel('Actual values ')
+  plt.ylabel('Predicted values')
+  plt.axis([0, 10, 0, 10])
+  plt.scatter(y_test[:, 2], y_test_pred[:, 2], s=5, color = 'blue', marker='*')
+
+  plt.subplot(2,2,4)
+  plt.title("Co-efficient 'd' (1,1)")
+  plt.xlabel('Actual values ')
+  plt.ylabel('Predicted values')
+  plt.axis([0, 10, 0, 10])
+  plt.scatter(y_test[:, 3], y_test_pred[:, 3], s=5, color = 'yellow', marker='*')
   
   plt.show()
   plt.savefig(fname)
@@ -311,7 +341,7 @@ if __name__ == '__main__':
   for i, noise in enumerate(y_test[:, 4]):
     noiselist.append(noise)
   
-  main_mode_op = 'c41.png'
+  main_mode_op = 'cr1.png'
   main_off_op = '2.png'
   main_heading = 'Co-efficient of the modes [ a(0,0) + b(1,0) + c(0,1) + d(1,1) ] for the entire test dataset'
   show_coeff_output(y_test, y_test_pred, main_mode_op, main_heading)
@@ -348,7 +378,7 @@ if __name__ == '__main__':
   low_noise_act = np.array([np.array(x) for x in low_noise_act])
   low_noise_pred = np.array([np.array(x) for x in low_noise_pred])
   low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.3'
-  low_op_mode = 'c43.png'
+  low_op_mode = 'cr2.png'
   low_op_off = '4.png'
   show_coeff_output(low_noise_act, low_noise_pred, low_op_mode, low_noise_heading)
   #show_offset_output(low_noise_act, low_noise_pred, low_op_off, low_noise_heading)
@@ -356,7 +386,7 @@ if __name__ == '__main__':
   med_noise_act = np.array([np.array(x) for x in med_noise_act])
   med_noise_pred = np.array([np.array(x) for x in med_noise_pred])
   med_noise_heading = 'Performance of the model when the noise is between 0.3 and 0.6'
-  med_op_mode = 'c45.png'
+  med_op_mode = 'cr3.png'
   med_op_off = '6.png'
   show_coeff_output(med_noise_act, med_noise_pred, med_op_mode, med_noise_heading)
   #show_offset_output(med_noise_act, med_noise_pred, med_op_off, med_noise_heading)
@@ -364,7 +394,7 @@ if __name__ == '__main__':
   high_noise_act = np.array([np.array(x) for x in high_noise_act])
   high_noise_pred = np.array([np.array(x) for x in high_noise_pred])
   high_noise_heading = 'Performance of the model when the noise is between 0.6 and 0.9'
-  high_op_mode = 'c47.png'
+  high_op_mode = 'cr4.png'
   high_op_off = '8.png'
   show_coeff_output(high_noise_act, high_noise_pred, high_op_mode, high_noise_heading)
   #show_offset_output(high_noise_act, high_noise_pred, high_op_off, high_noise_heading)
