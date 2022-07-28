@@ -261,15 +261,15 @@ if __name__ == '__main__':
 
   
   #Loading the saved model
-  model = keras.models.load_model('/home/sid/GWCNN/GW_input_data/gw-modal-decomposition/model_off_coeff.h5')
-  #model = keras.models.load_model('/home/siddhika/gw-modal-decomposition/new_model_comb.h5')
+  #model = keras.models.load_model('/home/sid/GWCNN/GW_input_data/gw-modal-decomposition/model_off_coeff.h5')
+  model = keras.models.load_model('/home/siddhika/gw-modal-decomposition/model_off_coeff.h5')
   #print(model.summary())
   
   
   #Fetching the test data
   img_size = 128
-  pathName = '/home/sid/GWCNN/GW_input_data/gw-modal-decomposition/dataset/coeff'
-  #pathName = '/home/siddhika/gw-modal-decomposition/Output/c_test'
+  #pathName = '/home/sid/GWCNN/GW_input_data/gw-modal-decomposition/dataset/coeff'
+  pathName = '/home/siddhika/gw-modal-decomposition/Output/coeff'
   testing = getdata(pathName)
   x_test = np.array(testing) / 255
   x_test.reshape(-1, img_size, img_size, 1)
