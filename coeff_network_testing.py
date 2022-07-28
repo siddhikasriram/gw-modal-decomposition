@@ -347,7 +347,7 @@ if __name__ == '__main__':
 
   for ind, act in enumerate(y_test):
     pred = y_test_pred[ind]
-    noise = y_test[ind,4]
+    noise = y_test[ind,6]
     if noise >= 0.05 and noise <= 0.3:
       low_noise_act.append(y_test[ind,0:6])
       low_noise_pred.append(y_test_pred[ind, 0:6])
