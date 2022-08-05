@@ -1,4 +1,4 @@
-from statistics import mean
+from statistics import median
 from sklearn.metrics import classification_report, confusion_matrix
 import os
 import cv2
