@@ -404,8 +404,8 @@ if __name__ == '__main__':
   for i, noise in enumerate(y_test[:, 6]):
     noiselist.append(noise)
   
-  main_mode_op = 'cr14.png'
-  main_off_op = 'cr001.png'
+  main_mode_op = 'cr001.png'
+  main_off_op = 'cr14.png'
   main_heading = 'Co-efficient of the modes [ a(0,0) + b(1,0) + c(0,1) + d(1,1) ] for the entire test dataset'
   show_coeff_output(y_test, y_test_pred, main_mode_op, main_heading)
   #show_offset_output(y_test, y_test_pred, main_off_op, main_heading)
@@ -443,7 +443,7 @@ if __name__ == '__main__':
   low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.3'
   low_op_mode = 'cr004.png'
   low_op_off = '4.png'
-  print(low_noise_act, low_noise_pred)
+  #print(low_noise_act, low_noise_pred)
   show_coeff_output(low_noise_act, low_noise_pred, low_op_mode, low_noise_heading)
   #show_offset_output(low_noise_act, low_noise_pred, low_op_off, low_noise_heading)
 
