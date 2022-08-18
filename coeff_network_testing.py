@@ -283,7 +283,7 @@ def show_coeff_output(y_test, y_test_pred, fname, heading):
   al=list(set(y_test[:, 0]))
   print('al', al)
   plt.scatter(y_test[:, 0], y_test_pred[:, 0], s=10, color = 'olivedrab', marker='*')
-  plt.scatter(al, a_mean, marker='*', color ='crimson')
+  plt.scatter(al, a_mean, marker='o', color ='crimson')
 
   plt.subplot(3,2,2)
   plt.title("Co-efficient 'b' (1,0)")
@@ -293,7 +293,7 @@ def show_coeff_output(y_test, y_test_pred, fname, heading):
   plt.plot([0.5,8.5],[0.5,8.5], color = 'grey')
   bl=list(set(y_test[:, 1]))
   plt.scatter(y_test[:, 1], y_test_pred[:, 1], s=10, color = 'olivedrab', marker='*')
-  plt.scatter(bl, b_mean, marker='*', color ='crimson')
+  plt.scatter(bl, b_mean, marker='o', color ='crimson')
 
   plt.subplot(3,2,3)
   plt.title("Co-efficient 'c' (0,1)")
@@ -303,7 +303,7 @@ def show_coeff_output(y_test, y_test_pred, fname, heading):
   plt.plot([0.5,8.5],[0.5,8.5], color = 'grey')
   cl=list(set(y_test[:, 2]))
   plt.scatter(y_test[:, 2], y_test_pred[:, 2], s=10, color = 'olivedrab', marker='*')
-  plt.scatter(cl, c_mean, marker='*', color ='crimson')
+  plt.scatter(cl, c_mean, marker='o', color ='crimson')
 
   plt.subplot(3,2,4)
   plt.title("Co-efficient 'd' (1,1)")
@@ -313,7 +313,7 @@ def show_coeff_output(y_test, y_test_pred, fname, heading):
   plt.plot([0.5,8.5],[0.5,8.5], color = 'grey')
   dl=list(set(y_test[:, 3]))
   plt.scatter(y_test[:, 3], y_test_pred[:, 3], s=10, color = 'olivedrab', marker='*')
-  plt.scatter(dl, d_mean, marker='*', color ='crimson')
+  plt.scatter(dl, d_mean, marker='o', color ='crimson')
 
   plt.subplot(3,2,5)
   plt.title('X Offset')
@@ -404,7 +404,7 @@ if __name__ == '__main__':
   for i, noise in enumerate(y_test[:, 6]):
     noiselist.append(noise)
   
-  main_mode_op = 'cr008.png'
+  main_mode_op = 'cr010.png'
   main_off_op = 'cr14.png'
   main_heading = 'Co-efficient of the modes [ a(0,0) + b(1,0) + c(0,1) + d(1,1) ] for the entire test dataset'
   show_coeff_output(y_test, y_test_pred, main_mode_op, main_heading)
@@ -441,7 +441,7 @@ if __name__ == '__main__':
   low_noise_act = np.array([np.array(x) for x in low_noise_act])
   low_noise_pred = np.array([np.array(x) for x in low_noise_pred])
   low_noise_heading = 'Performance of the model when the noise is between 0.05 and 0.3'
-  low_op_mode = 'cr007.png'
+  low_op_mode = 'cr011.png'
   low_op_off = '4.png'
   #print(low_noise_act, low_noise_pred)
   show_coeff_output(low_noise_act, low_noise_pred, low_op_mode, low_noise_heading)
@@ -450,7 +450,7 @@ if __name__ == '__main__':
   med_noise_act = np.array([np.array(x) for x in med_noise_act])
   med_noise_pred = np.array([np.array(x) for x in med_noise_pred])
   med_noise_heading = 'Performance of the model when the noise is between 0.3 and 0.6'
-  med_op_mode = 'cr006.png'
+  med_op_mode = 'cr012.png'
   med_op_off = '6.png'
   show_coeff_output(med_noise_act, med_noise_pred, med_op_mode, med_noise_heading)
   #show_offset_output(med_noise_act, med_noise_pred, med_op_off, med_noise_heading)
@@ -458,7 +458,7 @@ if __name__ == '__main__':
   high_noise_act = np.array([np.array(x) for x in high_noise_act])
   high_noise_pred = np.array([np.array(x) for x in high_noise_pred])
   high_noise_heading = 'Performance of the model when the noise is between 0.6 and 0.9'
-  high_op_mode = 'cr005.png'
+  high_op_mode = 'cr013.png'
   high_op_off = '8.png'
   show_coeff_output(high_noise_act, high_noise_pred, high_op_mode, high_noise_heading)
   #show_offset_output(high_noise_act, high_noise_pred, high_op_off, high_noise_heading)
